@@ -28,7 +28,11 @@ public class RootDbo {
 		this.connessione = connessione;
 		logger.end(metodo);
 	}
-
+/**
+ * 
+ * @param ps
+ * @param rs
+ */
 	protected void close(PreparedStatement ps, ResultSet rs){
 		final String metodo="close";
 		logger.start(metodo);
