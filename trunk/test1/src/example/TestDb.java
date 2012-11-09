@@ -14,7 +14,7 @@ public class TestDb {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		System.out.println("gooooooooooooooooooooooo");
+		System.out.println("START");
 		Db d =new Db();
 		d= null;
 		System.out.println("end");
