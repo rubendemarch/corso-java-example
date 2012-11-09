@@ -72,10 +72,7 @@ public class Connessione {
 	}
 
 	protected void finalize(){
-		final String metodo="finalize";
-		logger.start(metodo);
 		closeConnection();
-		logger.end(metodo);
 	}
 
 	/**
