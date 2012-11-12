@@ -50,7 +50,7 @@ public class Connessione {
 											password);
 		} catch (SQLException e) {
 			logger.fatal(metodo,
-					"tentativo connessione db",
+					"tentativo connessione database",
 					e);
 			throw e;
 		}
@@ -65,7 +65,7 @@ public class Connessione {
 			try {
 				connection.close();
 			} catch (SQLException e) {
-				logger.warn(metodo, "tentativo chiusura connessione db", e);
+				logger.warn(metodo, "tentativo chiusura connessione database", e);
 			}
 		}
 		logger.end(metodo);
