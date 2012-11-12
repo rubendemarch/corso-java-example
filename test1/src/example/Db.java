@@ -6,8 +6,10 @@ package example;
 import java.sql.SQLException;
 
 import bussinessObject.Alunno;
+import configuration.MyProperties;
 import dbo.connection.Connessione;
 import dbo.impl.DboAlunni;
+import exception.config.Config;
 
 /**
  * @author Dr
@@ -24,8 +26,10 @@ public class Db {
 	private void test1() {
 		Connessione c = null;
 		try {
-			c = new Connessione();
+			c = new Connessione(new MyProperties("C:/Users/Dr/DbConf.xml"));
 		} catch (ReflectiveOperationException | SQLException e) {
+			e.printStackTrace();
+		}catch (Config e) {
 			e.printStackTrace();
 		}
 		if (c!=null) {
