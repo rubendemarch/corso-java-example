@@ -30,6 +30,10 @@ public class Aula {
 		logger.end(metodo);
 	}
 
+	/**
+	 * 
+	 * @param alunno
+	 */
 	public void addNewAlunno(Alunno alunno){
 		final String metodo="addNewAlunno";
 		logger.start(metodo);
@@ -37,6 +41,10 @@ public class Aula {
 		logger.end(metodo);
 	}
 
+	/**
+	 * 
+	 * @param docente
+	 */
 	public void addNewDocente(Docente docente){
 		final String metodo="addNewDocente";
 		logger.start(metodo);
