@@ -3,6 +3,7 @@
  */
 package configuration;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -11,8 +12,10 @@ import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
 import util.MyLogger;
-import exception.ConfigFileNotFound;
-import exception.ConfigFileNotValid;
+import exception.config.Config;
+import exception.config.ConfigFileCreateEx;
+import exception.config.ConfigFileNotFound;
+import exception.config.ConfigFileNotValid;
 
 /**
  * @author Dr
@@ -36,8 +39,9 @@ public class MyProperties {
 		logger.end(metodo);
 	}
 
-	public String getPropertyValue(String key) throws ConfigFileNotFound {
+	public String getPropertyValue(String key) throws Config {
 		final String metodo="getPropertyValue";
+		logger.start(metodo);
 		if(inputStream==null){
 			try {
 				inputStream=new FileInputStream(pathFile);
@@ -72,8 +76,36 @@ public class MyProperties {
 				logger.warn(metodo, "fallito tentativo chiusura configInputStream", e);
 			}
 		}
+		logger.end(metodo);
 		return properties.getProperty(key);
 	}
 
-	//public 
+	public void writeConfigFile() throws Config{
+		final String metodo="writeConfigFile";
+		logger.start(metodo);
+		if(outputStream==null){
+			try {
+				outputStream= new FileOutputStream(pathFile);
+			} catch (FileNotFoundException e) {
+				logger.fatal(metodo, "impossibile esportare il file di properties", e);
+				throw new ConfigFileCreateEx("impossibile esportare il file di properties");
+			}
+		}
+		File f= new File(pathFile);
+		if(pathFile.toUpperCase().endsWith(".XML")){
+			try {
+				properties.storeToXML(outputStream, f.getName());
+			} catch (IOException e) {
+				logger.fatal(metodo, "fallita costruzione file di properties.xml", e);
+				throw new ConfigFileCreateEx("fallita costruzione file di properties.xml");
+			}
+		}else if(pathFile.toUpperCase().endsWith(".PROPERTIES")){
+			try {
+				properties.store(outputStream, f.getName());
+			} catch (IOException e) {
+				logger.fatal(metodo, "fallita costruzione file di properties.properties", e);
+				throw new ConfigFileCreateEx("fallita costruzione file di properties.properties");
+			}
+		}
+	}
 }

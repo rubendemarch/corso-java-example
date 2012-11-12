@@ -7,19 +7,19 @@ package exception;
  * @author Dr
  *
  */
-public class ConfigFileNotValid extends ConfigFileNotFound {
+public class MyException extends Exception {
 
 	/**
 	 * 
 	 */
-	public ConfigFileNotValid() {
+	public MyException() {
 		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * @param message
 	 */
-	public ConfigFileNotValid(String message) {
+	public MyException(String message) {
 		super(message);
 		// TODO Auto-generated constructor stub
 	}
@@ -27,7 +27,7 @@ public class ConfigFileNotValid extends ConfigFileNotFound {
 	/**
 	 * @param cause
 	 */
-	public ConfigFileNotValid(Throwable cause) {
+	public MyException(Throwable cause) {
 		super(cause);
 		// TODO Auto-generated constructor stub
 	}
@@ -36,7 +36,7 @@ public class ConfigFileNotValid extends ConfigFileNotFound {
 	 * @param message
 	 * @param cause
 	 */
-	public ConfigFileNotValid(String message, Throwable cause) {
+	public MyException(String message, Throwable cause) {
 		super(message, cause);
 		// TODO Auto-generated constructor stub
 	}
@@ -47,7 +47,7 @@ public class ConfigFileNotValid extends ConfigFileNotFound {
 	 * @param enableSuppression
 	 * @param writableStackTrace
 	 */
-	public ConfigFileNotValid(String message, Throwable cause,
+	public MyException(String message, Throwable cause,
 			boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 		// TODO Auto-generated constructor stub

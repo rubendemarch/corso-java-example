@@ -1,25 +1,27 @@
 /**
  * 
  */
-package exception;
+package exception.config;
+
+import exception.MyException;
 
 /**
  * @author Dr
  *
  */
-public class ConfigFileNotFound extends Exception {
+public class Config extends MyException {
 
 	/**
 	 * 
 	 */
-	public ConfigFileNotFound() {
+	public Config() {
 		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * @param message
 	 */
-	public ConfigFileNotFound(String message) {
+	public Config(String message) {
 		super(message);
 		// TODO Auto-generated constructor stub
 	}
@@ -27,7 +29,7 @@ public class ConfigFileNotFound extends Exception {
 	/**
 	 * @param cause
 	 */
-	public ConfigFileNotFound(Throwable cause) {
+	public Config(Throwable cause) {
 		super(cause);
 		// TODO Auto-generated constructor stub
 	}
@@ -36,7 +38,7 @@ public class ConfigFileNotFound extends Exception {
 	 * @param message
 	 * @param cause
 	 */
-	public ConfigFileNotFound(String message, Throwable cause) {
+	public Config(String message, Throwable cause) {
 		super(message, cause);
 		// TODO Auto-generated constructor stub
 	}
@@ -47,8 +49,8 @@ public class ConfigFileNotFound extends Exception {
 	 * @param enableSuppression
 	 * @param writableStackTrace
 	 */
-	public ConfigFileNotFound(String message, Throwable cause,
-			boolean enableSuppression, boolean writableStackTrace) {
+	public Config(String message, Throwable cause, boolean enableSuppression,
+			boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 		// TODO Auto-generated constructor stub
 	}
