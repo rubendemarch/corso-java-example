@@ -10,7 +10,7 @@ import util.MyLogger;
 
 /**
  * @author Dr
- *
+ *  
  */
 public class Aula {
 	private MyLogger logger;
@@ -38,7 +38,7 @@ public class Aula {
 	}
 
 	public void addNewDocente(Docente docente){
-		final String metodo="addNewAlunno";
+		final String metodo="addNewDocente";
 		logger.start(metodo);
 		docenteList.add(docente);
 		logger.end(metodo);
