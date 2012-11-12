@@ -42,7 +42,7 @@ public class MyProperties {
 	public String getPropertyValue(String key) throws Config {
 		final String metodo="getPropertyValue";
 		logger.start(metodo);
-		if(inputStream==null){
+		if(properties==null && inputStream==null){
 			try {
 				inputStream=new FileInputStream(pathFile);
 			} catch (FileNotFoundException e) {
@@ -107,5 +107,12 @@ public class MyProperties {
 				throw new ConfigFileCreateEx("fallita costruzione file di properties.properties");
 			}
 		}
+	}
+
+	public void setProperty(String key, String value){
+		if(properties==null){
+			properties=new Properties();
+		}
+		properties.setProperty(key, value);
 	}
 }
