@@ -67,10 +67,10 @@ FROM ALUNNI order by nome desc*/
 						alunnoList.add(
 							new Alunno(rs.getString("USER_ID"),
 									rs.getString("NOME"),
-									rs.getString("cognome"),
+									rs.getString("COGNOME"),
 									Convert.convert(rs.getDate("DATA_NASCITA")),
-									Convert.convert(rs.getString("sesso")),
-									rs.getString("cf"),
+									Convert.convert(rs.getString("SESSO")),
+									rs.getString("CF"),
 									rs.getString("STATO_NASCITA"), 
 									rs.getString("COD_STATO_NASCITA"),  
 									rs.getString("COMUNE_NASCITA"), 
