@@ -15,6 +15,7 @@ public class TestDb {
 	 */
 	public static void main(String[] args) {
 		System.out.println("START");
+		
 		Db d =new Db();
 		d= null;
 		System.out.println("END");
