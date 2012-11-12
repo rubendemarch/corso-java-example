@@ -23,9 +23,9 @@ public class Connessione {
 	private String password = "java";
 
 	/**
-	 * @throws ReflectiveOperationException 
-	 * @throws SQLException 
 	 * 
+	 * @throws ReflectiveOperationException
+	 * @throws SQLException
 	 */
 	public Connessione() throws ReflectiveOperationException, SQLException {
 		logger=new MyLogger(this.getClass());
