@@ -17,7 +17,7 @@ public class TestDb {
 		System.out.println("START");
 		Db d =new Db();
 		d= null;
-		System.out.println("end");
+		System.out.println("END");
 		int cnt=0;
 		while(cnt<5){
 			cnt++;
