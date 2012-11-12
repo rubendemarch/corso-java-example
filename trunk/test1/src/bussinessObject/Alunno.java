@@ -37,8 +37,12 @@ public class Alunno extends Persona {
 			TitoloDiStudio titoloDiStudio) {
 		super(nome, cognome, dataNascita, sesso, cf, statoNascita,
 				codStatoNascita, comuneNascita, codComuneNascita, email);
+		logger=new MyLogger(this.getClass());
+		final String metodo="costruttore";
+		logger.start(metodo);
 		this.dataIscrizione = dataIscrizione;
 		this.titoloDiStudio = titoloDiStudio;
+		logger.end(metodo);
 	}
 
 	/**
