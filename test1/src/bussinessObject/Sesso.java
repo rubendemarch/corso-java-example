@@ -1,5 +1,9 @@
 package bussinessObject;
-
+/**
+ * 
+ * @author Alfa-405
+ *
+ */
 public enum Sesso {
 	M("Maschio"), F("Femmina");
 	String label;
