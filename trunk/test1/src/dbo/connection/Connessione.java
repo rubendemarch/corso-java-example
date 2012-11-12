@@ -16,9 +16,9 @@ import util.MyLogger;
 public class Connessione {
 	private MyLogger logger;
 	private Connection connection=null;
-	private String url = "jdbc:oracle:thin:@localhost:1521";
+	private String url = "jdbc:oracle:thin:@localhost:1521";// url di connessione a oracle
 	private String dbName = ":xe";
-	private String driver = "oracle.jdbc.driver.OracleDriver";
+	private String driver = "oracle.jdbc.driver.OracleDriver";//driver per connessione a oracle
 	private String userName = "APPLICAZIONIJAVA"; 
 	private String password = "java";
 
