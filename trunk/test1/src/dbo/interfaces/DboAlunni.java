@@ -16,7 +16,7 @@ public interface DboAlunni {
 
 	/**
 	 * 
-	 * @return restituisce tutti gli alunni presenti nella tabella alunni
+	 * @return restituisce tutti gli alunni presenti nella tabella ALUNNI
 	 */
 	public List<Alunno>readAlunni();
 }
