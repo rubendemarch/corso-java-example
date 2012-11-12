@@ -47,13 +47,13 @@ public class DboAlunni
 				/*SELECT USER_ID,NOME,COGNOME,DATA_NASCITA,SESSO,CF,
 STATO_NASCITA,COD_STATO_NASCITA,COMUNE_NASCITA,COD_COMUNE_NASCITA,
 E_MAIL,DATA_ISCRIZIONE,TITOLO_STUDIO,TELEFONO
-FROM ALUNNI order by cognome asc*/
+FROM ALUNNI order by nome desc*/
 			new StringBuilder("SELECT ")
 				.append("USER_ID,NOME,COGNOME,DATA_NASCITA,SESSO,CF,")
 				.append("STATO_NASCITA,COD_STATO_NASCITA,COMUNE_NASCITA,COD_COMUNE_NASCITA,")
 				.append("E_MAIL,DATA_ISCRIZIONE,TITOLO_STUDIO ")
 				.append("FROM alunni ")
-				.append("ORDER BY cognome asc");
+				.append("ORDER BY nome DESC");
 		PreparedStatement ps=null;
 		ResultSet rs=null;
 		ArrayList<Alunno> alunnoList=null;
