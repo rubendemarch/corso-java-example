@@ -8,6 +8,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import util.MyLogger;
+import configuration.MyProperties;
+import exception.config.Config;
 
 /**
  * @author Dr
@@ -16,21 +18,33 @@ import util.MyLogger;
 public class Connessione {
 	private MyLogger logger;
 	private Connection connection=null;
-	private String url = "jdbc:oracle:thin:@localhost:1521";// url di connessione a oracle
-	private String dbName = ":xe";
-	private String driver = "oracle.jdbc.driver.OracleDriver";//driver per connessione a oracle
-	private String userName = "APPLICAZIONIJAVA"; 
-	private String password = "java";
+	private String url = null;
+	private String dbName = null;
+	private String driver = null;
+	private String userName = null; 
+	private String password = null;
 
 	/**
 	 * 
 	 * @throws ReflectiveOperationException
 	 * @throws SQLException
+	 * @throws Config 
 	 */
-	public Connessione() throws ReflectiveOperationException, SQLException {
+	public Connessione(MyProperties properties) throws ReflectiveOperationException, SQLException, Config {
 		logger=new MyLogger(this.getClass());
 		final String metodo="costruttore";
 		logger.start(metodo);
+		
+		try {
+			url =				properties.getPropertyValue("url");
+			dbName =		properties.getPropertyValue("dbName");
+			driver =			properties.getPropertyValue("driver");
+			userName =	properties.getPropertyValue("userName");
+			password =	properties.getPropertyValue("password");
+		} catch (Config e) {
+			logger.fatal(metodo,"tentativo recupero dati di configurazione da properties",e);
+			throw e;
+		}
 		
 		try {
 			Class.forName(driver).newInstance();
