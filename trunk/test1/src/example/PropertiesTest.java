@@ -24,7 +24,7 @@ public class PropertiesTest {
 	 */
 	public static void main(String[] args) {
 //		MyProperties myProperties = new MyProperties("../../DbConf.xml");
-		MyProperties myProperties = new MyProperties("DbConf.properties");
+		MyProperties myProperties = new MyProperties("DbConf.xml");
 		myProperties.setProperty("url","jdbc:oracle:thin:@localhost:1521");
 		myProperties.setProperty("dbName",":xe");
 		myProperties.setProperty("driver","oracle.jdbc.driver.OracleDriver");
