@@ -13,12 +13,6 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class MyCript {
 
-	/**
-	 * 
-	 */
-	public MyCript() {
-	}
-
 	public static String encrypt(String input) {
 		StringBuilder ret = new StringBuilder();
 		for (char c :input.toCharArray()){
