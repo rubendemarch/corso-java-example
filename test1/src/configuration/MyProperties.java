@@ -12,6 +12,7 @@ import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
 import util.MyLogger;
+import util.cript.MyCript;
 import exception.config.Config;
 import exception.config.ConfigFileCreateEx;
 import exception.config.ConfigFileNotFound;
@@ -41,6 +42,26 @@ public class MyProperties {
 
 	public String getPropertyValue(String key) throws Config {
 		final String metodo="getPropertyValue";
+		logger.start(metodo);
+		init();
+		String v = properties.getProperty(key);
+		if(v==null){
+			v = properties.getProperty(MyCript.encrypt(key));
+			if(v!=null){
+				v = MyCript.decrypt(v);
+			}
+		}
+		logger.end(metodo);
+		return v;
+	}
+
+	/**
+	 * @param metodo
+	 * @throws ConfigFileNotFound
+	 * @throws ConfigFileNotValid
+	 */
+	private void init() throws ConfigFileNotFound,ConfigFileNotValid {
+		final String metodo="init";
 		logger.start(metodo);
 		if(properties==null && inputStream==null){
 			try {
@@ -77,7 +98,6 @@ public class MyProperties {
 			}
 		}
 		logger.end(metodo);
-		return properties.getProperty(key);
 	}
 
 	public void writeConfigFile() throws Config{
@@ -109,10 +129,11 @@ public class MyProperties {
 		}
 	}
 
-	public void setProperty(String key, String value){
+	public void setProperty(String key, String value, boolean writeEncripted){
 		if(properties==null){
 			properties=new Properties();
 		}
-		properties.setProperty(key, value);
+		properties.setProperty(writeEncripted?MyCript.encrypt(key):key,
+										writeEncripted?MyCript.encrypt(value):value);
 	}
 }

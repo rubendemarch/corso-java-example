@@ -26,7 +26,7 @@ public class Db {
 	private void test1() {
 		Connessione c = null;
 		try {
-			c = new Connessione(new MyProperties("C:/Users/Dr/DbConf.xml"));
+			c = new Connessione(new MyProperties("DbConf.xml"));
 		} catch (ReflectiveOperationException | SQLException e) {
 			e.printStackTrace();
 		}catch (Config e) {

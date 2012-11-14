@@ -3,8 +3,8 @@
 <properties>
 <comment>DbConf.xml</comment>
 <entry key="url">jdbc:oracle:thin:@localhost:1521</entry>
-<entry key="password">java</entry>
 <entry key="dbName">:xe</entry>
 <entry key="driver">oracle.jdbc.driver.OracleDriver</entry>
-<entry key="userName">APPLICAZIONIJAVA</entry>
+<entry key="117115101114078097109101">065080080076073067065090073079078073074065086065</entry>
+<entry key="112097115115119111114100">106097118097</entry>
 </properties>
