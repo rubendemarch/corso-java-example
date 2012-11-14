@@ -3,13 +3,23 @@
  */
 package enums;
 
+import java.util.Calendar;
+
 /**
  * @author Dr
  *
  */
 public enum Alunno {
-	NOME("nome",45, 50,true,' ', ";"),
-	COGNOME("nome",45, 50,true,' ', ";");
+	USER_ID(						"USER_ID",						36, 	50,true,' ', ";",String.class),
+	NOME(							"nome",								35, 	50,true,' ', ";",String.class),
+	COGNOME(						"cognome",						35, 	50,true,' ', ";",String.class),
+	DATA_NASCITA(				"data_nascita",					0, 		50,true,' ', ";",Calendar.class),
+	SESSO(							"sesso",								1, 		1,true,' ', ";",String.class),
+	CF(								"cf",									16, 	16,true,' ', ";",String.class),
+	STATO_NASCITA(			"STATO_NASCITA",				35, 	50,true,' ', ";",String.class),
+	COD_STATO_NASCITA(	"COD_STATO_NASCITA",		4,		50,true,' ', ";",String.class),
+	COD_COMUNE_NASCITA(	"COD_COMUNE_NASCITA",	4,		50,true,' ', ";",String.class),
+	COMUNE_NASCITA(			"COMUNE_NASCITA",			35, 	50,true,' ', ";",String.class);
 
 	private final String columName;
 	private final int dbSize;
@@ -17,6 +27,7 @@ public enum Alunno {
 	private final boolean isLeftAlign;
 	private final char padChar;
 	private final String separetor;
+	private final Class clazz;
 
 	/**
 	 * @param columName
@@ -27,13 +38,14 @@ public enum Alunno {
 	 * @param separetor
 	 */
 	private Alunno(String columName, int dbSize, int fileSize,
-			boolean isLeftAlign, char padChar, String separetor) {
+			boolean isLeftAlign, char padChar, String separetor, Class clazz) {
 		this.columName = columName;
 		this.dbSize = dbSize;
 		this.fileSize = fileSize;
 		this.isLeftAlign = isLeftAlign;
 		this.padChar = padChar;
 		this.separetor = separetor;
+		this.clazz=clazz;
 	}
 
 	/**
@@ -72,5 +84,12 @@ public enum Alunno {
 	 */
 	public String getSeparetor() {
 		return separetor;
+	}
+
+	/**
+	 * @return the clazz
+	 */
+	public Class getClazz() {
+		return clazz;
 	}
 }
