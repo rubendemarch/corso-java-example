@@ -7,9 +7,10 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 import util.StringFormat;
-
-import bussinessObject.Alunno;
+import bussinessObject.ColumnDescriptor;
+import bussinessObject.Descriptors;
 import configuration.MyProperties;
+import dbo.RootDbo;
 import dbo.connection.Connessione;
 import dbo.impl.DboAlunni;
 import exception.config.Config;
@@ -23,6 +24,7 @@ public class Db {
 	
 	public Db(){
 		test1();
+		test2();
 	}
 	/**
 	 * 
@@ -53,4 +55,48 @@ public class Db {
 		c.closeConnection();
 	}
 
+	private void test2() {
+		Connessione c = null;
+		try {
+			c = new Connessione(new MyProperties("DbConf.xml"));
+		} catch (ReflectiveOperationException | SQLException e) {
+			e.printStackTrace();
+		}catch (Config e) {
+			e.printStackTrace();
+		}
+		if (c!=null) {
+			RootDbo dbo = new RootDbo(c);
+			RootFile rf = new RootFile();
+			rf.creaFile("test1_1.txt");
+			RootFile rf2 = new RootFile();
+			rf2.creaFile("test2_1.txt");
+			
+			Descriptors di = new Descriptors();
+			
+			di.addColumnDescriptor(new ColumnDescriptor("USER_ID",						36, 	50,true,' ', ";",""));
+			di.addColumnDescriptor(new ColumnDescriptor("nome",								35, 	50,true,' ', ";",""));
+			di.addColumnDescriptor(new ColumnDescriptor("cognome",						35, 	50,true,' ', ";",""));
+			di.addColumnDescriptor(new ColumnDescriptor("data_nascita",					0, 		50,true,' ', ";","YYYYMMdd"));
+			di.addColumnDescriptor(new ColumnDescriptor("sesso",								1, 		1,true,' ', ";",""));
+			di.addColumnDescriptor(new ColumnDescriptor("cf",									16, 	16,true,' ', ";",""));
+			di.addColumnDescriptor(new ColumnDescriptor("STATO_NASCITA",				35, 	50,true,' ', ";",""));
+			di.addColumnDescriptor(new ColumnDescriptor("COD_STATO_NASCITA",		4,		50,true,' ', ";",""));
+			di.addColumnDescriptor(new ColumnDescriptor("COD_COMUNE_NASCITA",	4,		50,true,' ', ";",""));
+			di.addColumnDescriptor(new ColumnDescriptor("COMUNE_NASCITA",			35, 	50,true,' ', ";",""));
+			
+			
+			for (HashMap<String, Object> map: dbo.dynamicRead(di,
+					" alunni",
+					"",
+					"",
+					"")) {
+				rf.println(StringFormat.formatMap(map, true, di));
+				rf2.println(StringFormat.formatMap(map, false, di));
+			}
+			rf.closePrintStream();
+			rf2.closePrintStream();
+		}
+		c.closeConnection();
+	}
+	
 }
