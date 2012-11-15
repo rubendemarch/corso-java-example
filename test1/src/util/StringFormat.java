@@ -3,6 +3,7 @@
  */
 package util;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -29,7 +30,8 @@ public class StringFormat {
 		StringBuilder ret = new StringBuilder();
 		if(isCsvFormat){
 			for (enums.Alunno a : enums.Alunno.values()) {
-				ret.append(format(alunno.get(a.getColumName()),a)).append(a.getSeparetor());
+				ret.append(format(alunno.get(a.getColumName()),a))
+					.append(a.getSeparetor());
 			}
 		}else{
 			for (enums.Alunno a : enums.Alunno.values()) {
@@ -53,13 +55,18 @@ public class StringFormat {
 	}
 
 	public static String format(Object val, Alunno a){
-		if(String.class==a.getClazz()){
-			return (String)val;
+		if(val!=null){
+			if(String.class==val.getClass()){
+				return (String)val;
+			}
+			if(Calendar.class==val.getClass()){
+				return new SimpleDateFormat(a.getPattern()).format(((Calendar)val).getTime());
+			}
+			if(Timestamp.class==val.getClass()){
+				return new SimpleDateFormat(a.getPattern()).format(((Timestamp)val).getTime());
+			}
+			return val.getClass().getName();
 		}
-		if(Calendar.class==a.getClazz()){
-			return new SimpleDateFormat("YYYYMMDD").format(((Calendar)val).getTime());
-		}
-		
 		return "";
 	}
 }

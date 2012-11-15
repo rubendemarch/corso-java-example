@@ -3,23 +3,22 @@
  */
 package enums;
 
-import java.util.Calendar;
 
 /**
  * @author Dr
  *
  */
 public enum Alunno {
-	USER_ID(						"USER_ID",						36, 	50,true,' ', ";",String.class),
-	NOME(							"nome",								35, 	50,true,' ', ";",String.class),
-	COGNOME(						"cognome",						35, 	50,true,' ', ";",String.class),
-	DATA_NASCITA(				"data_nascita",					0, 		50,true,' ', ";",Calendar.class),
-	SESSO(							"sesso",								1, 		1,true,' ', ";",String.class),
-	CF(								"cf",									16, 	16,true,' ', ";",String.class),
-	STATO_NASCITA(			"STATO_NASCITA",				35, 	50,true,' ', ";",String.class),
-	COD_STATO_NASCITA(	"COD_STATO_NASCITA",		4,		50,true,' ', ";",String.class),
-	COD_COMUNE_NASCITA(	"COD_COMUNE_NASCITA",	4,		50,true,' ', ";",String.class),
-	COMUNE_NASCITA(			"COMUNE_NASCITA",			35, 	50,true,' ', ";",String.class);
+	USER_ID(						"USER_ID",						36, 	50,true,' ', ";",""),
+	NOME(							"nome",								35, 	50,true,' ', ";",""),
+	COGNOME(						"cognome",						35, 	50,true,' ', ";",""),
+	DATA_NASCITA(				"data_nascita",					0, 		50,true,' ', ";","YYYYMMdd"),
+	SESSO(							"sesso",								1, 		1,true,' ', ";",""),
+	CF(								"cf",									16, 	16,true,' ', ";",""),
+	STATO_NASCITA(			"STATO_NASCITA",				35, 	50,true,' ', ";",""),
+	COD_STATO_NASCITA(	"COD_STATO_NASCITA",		4,		50,true,' ', ";",""),
+	COD_COMUNE_NASCITA(	"COD_COMUNE_NASCITA",	4,		50,true,' ', ";",""),
+	COMUNE_NASCITA(			"COMUNE_NASCITA",			35, 	50,true,' ', ";","");
 
 	private final String columName;
 	private final int dbSize;
@@ -27,7 +26,7 @@ public enum Alunno {
 	private final boolean isLeftAlign;
 	private final char padChar;
 	private final String separetor;
-	private final Class clazz;
+	private final String pattern;
 
 	/**
 	 * @param columName
@@ -38,14 +37,14 @@ public enum Alunno {
 	 * @param separetor
 	 */
 	private Alunno(String columName, int dbSize, int fileSize,
-			boolean isLeftAlign, char padChar, String separetor, Class clazz) {
+			boolean isLeftAlign, char padChar, String separetor, String pattern) {
 		this.columName = columName;
 		this.dbSize = dbSize;
 		this.fileSize = fileSize;
 		this.isLeftAlign = isLeftAlign;
 		this.padChar = padChar;
 		this.separetor = separetor;
-		this.clazz=clazz;
+		this.pattern=pattern;
 	}
 
 	/**
@@ -87,9 +86,9 @@ public enum Alunno {
 	}
 
 	/**
-	 * @return the clazz
+	 * @return the pattern
 	 */
-	public Class getClazz() {
-		return clazz;
+	public String getPattern() {
+		return pattern;
 	}
 }
