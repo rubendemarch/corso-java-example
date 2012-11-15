@@ -119,7 +119,8 @@ public class DboAlunni
 					while(rs.next()){
 						HashMap<String,Object> alunno=new HashMap<String,Object>();
 						for (enums.Alunno a : enums.Alunno.values()) {
-							alunno.put(a.getColumName(), Convert.convert(a, rs));
+							//alunno.put(a.getColumName(), Convert.convert(a, rs));
+							alunno.put(a.getColumName(), rs.getObject(a.getColumName()));
 						}
 						
 						alunnoList.add(
