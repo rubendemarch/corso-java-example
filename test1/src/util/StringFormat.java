@@ -10,6 +10,8 @@ import java.util.HashMap;
 
 import org.apache.commons.lang3.StringUtils;
 
+import bussinessObject.interfaces.ColumnDescriptorInterface;
+import bussinessObject.interfaces.DescriptorsInterface;
 import enums.Alunno;
 
 /**
@@ -60,6 +62,47 @@ public class StringFormat {
 			}
 			if(Timestamp.class==val.getClass()){
 				return new SimpleDateFormat(a.getPattern()).format(((Timestamp)val).getTime());
+			}
+			return val.getClass().getName();
+		}
+		return "";
+	}
+
+	public static String formatMap(	HashMap<String, Object>map,
+													boolean isCsvFormat,
+													DescriptorsInterface di){
+		StringBuilder ret = new StringBuilder();
+		if(isCsvFormat){
+			for (ColumnDescriptorInterface cdi: di.getDescriptors()) {
+				ret.append(format(map.get(cdi.getColumName()),cdi))
+					.append(cdi.getSeparetor());
+			}
+		}else{
+			for (ColumnDescriptorInterface cdi: di.getDescriptors()) {
+				ret.append(
+					(cdi.isLeftAlign())?
+						StringUtils.rightPad(
+							format(map.get(cdi.getColumName()),cdi),
+							cdi.getFileSize(),
+							cdi.getPadChar()):
+						StringUtils.leftPad(
+							format(map.get(cdi.getColumName()),cdi),
+							cdi.getFileSize(),
+							cdi.getPadChar()));
+			}
+		}
+		return ret.toString();
+	}
+	public static String format(Object val, ColumnDescriptorInterface cdi){
+		if(val!=null){
+			if(String.class==val.getClass()){
+				return (String)val;
+			}
+			if(Calendar.class==val.getClass()){
+				return new SimpleDateFormat(cdi.getPattern()).format(((Calendar)val).getTime());
+			}
+			if(Timestamp.class==val.getClass()){
+				return new SimpleDateFormat(cdi.getPattern()).format(((Timestamp)val).getTime());
 			}
 			return val.getClass().getName();
 		}
