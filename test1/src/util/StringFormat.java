@@ -36,19 +36,15 @@ public class StringFormat {
 		}else{
 			for (enums.Alunno a : enums.Alunno.values()) {
 				ret.append(
-						
-						(a.isLeftAlign())?
+					(a.isLeftAlign())?
 						StringUtils.rightPad(
 							format(alunno.get(a.getColumName()),a),
 							a.getFileSize(),
 							a.getPadChar()):
 						StringUtils.leftPad(
-								format(alunno.get(a.getColumName()),a),
-								a.getFileSize(),
-								a.getPadChar())
-						
-						
-						);
+							format(alunno.get(a.getColumName()),a),
+							a.getFileSize(),
+							a.getPadChar()));
 			}
 		}
 		return ret.toString();
