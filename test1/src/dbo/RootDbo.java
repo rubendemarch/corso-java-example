@@ -88,7 +88,12 @@ public class RootDbo {
 		}
 	}
 
-	public List<HashMap<String,Object>> dynamicRead(DescriptorsInterface di) {
+	public List<HashMap<String,Object>> dynamicRead(
+			DescriptorsInterface di,
+			String tables,
+			String whereCond,
+			String orderByCond,
+			String groupByCond) {
 		final String metodo="dynamicRead";
 		logger.start(metodo);
 		StringBuilder sql = new StringBuilder("SELECT ");
@@ -96,46 +101,30 @@ public class RootDbo {
 			sql.append(cdi.getColumName()).append(",");
 		}
 		sql=sql.deleteCharAt(sql.length()-1);
-		sql.append(" FROM alunni ")
-				.append("ORDER BY nome DESC");
+		sql.append(" FROM ")
+			.append(tables)
+			.append(whereCond)
+			.append(orderByCond)
+			.append(groupByCond);
 		PreparedStatement ps=null;
 		ResultSet rs=null;
-		ArrayList<HashMap<String,Object>> alunnoList=null;
+		ArrayList<HashMap<String,Object>> res=null;
 		try {
 			ps = getPreparedStatement(sql.toString());
+			
 			rs = executeQuery(ps);
-			alunnoList = new ArrayList<HashMap<String,Object>>();
+			res = new ArrayList<HashMap<String,Object>>();
 			if(rs!=null){
 				try {
 					while(rs.next()){
-						HashMap<String,Object> alunno=new HashMap<String,Object>();
-						for (enums.Alunno a : enums.Alunno.values()) {
-							//alunno.put(a.getColumName(), Convert.convert(a, rs));
-							alunno.put(a.getColumName(), rs.getObject(a.getColumName()));
+						HashMap<String,Object> row=new HashMap<String,Object>();
+						for (ColumnDescriptorInterface cdi: di.getDescriptors()) {
+							row.put(cdi.getColumName(), rs.getObject(cdi.getColumName()));
 						}
-						
-						alunnoList.add(
-								alunno
-//							new Alunno(rs.getString("USER_ID"),
-//									rs.getString("NOME"),
-//									rs.getString("COGNOME"),
-//									Convert.convert(rs.getDate("DATA_NASCITA")),
-//									Convert.convert(rs.getString("SESSO")),
-//									rs.getString("CF"),
-//									rs.getString("STATO_NASCITA"), 
-//									rs.getString("COD_STATO_NASCITA"),  
-//									rs.getString("COMUNE_NASCITA"), 
-//									rs.getString("COD_COMUNE_NASCITA"), 
-//									rs.getString("E_MAIL"),  
-//									Convert.convert(rs.getDate("DATA_ISCRIZIONE")), 
-//									new TitoloDiStudio(rs.getString("TITOLO_STUDIO")))
-							);
+						res.add(row);
 					}
 				} catch (SQLException e) {
 					logger.error(metodo, "scorro risultato", e);
-					throw e;
-				} catch (Exception e) {
-					logger.error(metodo, "COSTRUZIONE ALUNNO", e);
 					throw e;
 				}
 			}
@@ -145,6 +134,6 @@ public class RootDbo {
 			close(ps,rs);
 		}
 		logger.end(metodo);
-		return alunnoList;
+		return res;
 	}
 }
