@@ -9,6 +9,7 @@ import java.util.HashMap;
 import util.StringFormat;
 import bussinessObject.ColumnDescriptor;
 import bussinessObject.Descriptors;
+import bussinessObject.interfaces.ColumnDescriptorInterface;
 import configuration.MyProperties;
 import dbo.RootDbo;
 import dbo.connection.Connessione;
@@ -84,12 +85,21 @@ public class Db {
 			di.addColumnDescriptor(new ColumnDescriptor("COD_COMUNE_NASCITA",	4,		50,true,' ', ";",""));
 			di.addColumnDescriptor(new ColumnDescriptor("COMUNE_NASCITA",			35, 	50,true,' ', ";",""));
 			
+			StringBuilder sql = new StringBuilder("SELECT ");
+			for (ColumnDescriptorInterface cdi: di.getDescriptors()) {
+				sql.append(cdi.getColumName()).append(",");
+			}
+			sql=sql.deleteCharAt(sql.length()-1);
+			sql.append(" FROM ")
+				.append(" alunni")
+				.append("")//whereCond
+				.append("")//orderByCond
+				.append("");//groupByCond
 			
-			for (HashMap<String, Object> map: dbo.dynamicRead(di,
-					" alunni",
-					"",
-					"",
-					"")) {
+			
+			for (HashMap<String, Object> map: dbo.dynamicExecuteQuery(di,
+					sql.toString(),
+					null)) {
 				rf.println(StringFormat.formatMap(map, true, di));
 				rf2.println(StringFormat.formatMap(map, false, di));
 			}
