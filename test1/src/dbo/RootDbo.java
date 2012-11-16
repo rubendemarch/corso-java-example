@@ -88,30 +88,19 @@ public class RootDbo {
 		}
 	}
 
-	public List<HashMap<String,Object>> dynamicRead(
+	public List<HashMap<String,Object>> dynamicExecuteQuery(
 			DescriptorsInterface di,
-			String tables,
-			String whereCond,
-			String orderByCond,
-			String groupByCond) {
-		final String metodo="dynamicRead";
+			String sql,
+			List<Object>params) {
+		final String metodo="dynamicExecuteQuery";
 		logger.start(metodo);
-		StringBuilder sql = new StringBuilder("SELECT ");
-		for (ColumnDescriptorInterface cdi: di.getDescriptors()) {
-			sql.append(cdi.getColumName()).append(",");
-		}
-		sql=sql.deleteCharAt(sql.length()-1);
-		sql.append(" FROM ")
-			.append(tables)
-			.append(whereCond)
-			.append(orderByCond)
-			.append(groupByCond);
+
 		PreparedStatement ps=null;
 		ResultSet rs=null;
 		ArrayList<HashMap<String,Object>> res=null;
 		try {
-			ps = getPreparedStatement(sql.toString());
-			
+			ps = getPreparedStatement(sql);
+			setParams(params, ps);
 			rs = executeQuery(ps);
 			res = new ArrayList<HashMap<String,Object>>();
 			if(rs!=null){
@@ -136,4 +125,46 @@ public class RootDbo {
 		logger.end(metodo);
 		return res;
 	}
+	/**
+	 * @param params
+	 * @param ps
+	 * @throws SQLException
+	 */
+	private void setParams(List<Object> params, PreparedStatement ps)
+			throws SQLException {
+		if (params!=null) {
+			for (int i = 0; i < params.size(); i++) {
+				ps.setObject(i + 1, params.get(i));
+			}
+		}
+	}
+
+	public int dynamicExecuteUpdate(
+			String sql,
+			List<Object>params) {
+		final String metodo="dynamicExecuteUpdate";
+		logger.start(metodo);
+		PreparedStatement ps=null;
+		try {
+			ps = getPreparedStatement(sql);
+			setParams(params, ps);
+			return executeUpdate(ps);
+		} catch (SQLException e) {
+			logger.error(metodo, "", e);
+		}finally{
+			close(ps,null);
+			logger.end(metodo);
+		}
+		return 0;
+	}
+
+	/**
+	 * @param ps
+	 * @return
+	 * @throws SQLException
+	 */
+	private int executeUpdate(PreparedStatement ps) throws SQLException {
+		return ps.executeUpdate();
+	}
+
 }
