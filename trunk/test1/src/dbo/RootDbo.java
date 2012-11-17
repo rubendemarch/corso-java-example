@@ -132,11 +132,15 @@ public class RootDbo {
 	 */
 	private void setParams(List<Object> params, PreparedStatement ps)
 			throws SQLException {
+		final String metodo="setParams";
+		logger.start(metodo);
+
 		if (params!=null) {
 			for (int i = 0; i < params.size(); i++) {
 				ps.setObject(i + 1, params.get(i));
 			}
 		}
+		logger.end(metodo);
 	}
 
 	public int dynamicExecuteUpdate(
