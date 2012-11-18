@@ -87,7 +87,7 @@ public class RootDbo {
 			throw e;
 		}
 	}
-
+	//Metodo per la visualizzaziome degli attributi nella tabella (SELECT)
 	public List<HashMap<String,Object>> dynamicExecuteQuery(
 			DescriptorsInterface di,
 			String sql,
@@ -142,7 +142,13 @@ public class RootDbo {
 		}
 		logger.end(metodo);
 	}
-
+	/**
+	 * 
+	 * @param sql
+	 * @param params
+	 * @return
+	 */
+	//Metodo per l'aggiornamento della tabella (DELETE, UPDATE, INSERT, DROP)
 	public int dynamicExecuteUpdate(
 			String sql,
 			List<Object>params) {
