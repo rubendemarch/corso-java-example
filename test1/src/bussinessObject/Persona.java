@@ -196,7 +196,10 @@ public class Persona {
 	/**
 	 * @return se la classe ha lo userID, ritorna userID. Diversamente lo genera e lo restituisce
 	 */
-	public String generateID() {
+	public String generateID() 
+	{
+		final String metodo="generateID";
+		logger.start(metodo);
 		if(userID==null){
 			userID=
 				new StringBuilder(cf)
@@ -208,6 +211,7 @@ public class Persona {
 				new Random(89L)
 					.nextInt(999)).toString();
 		}
+		logger.end(metodo);
 		return userID;
 	}
 	/**
