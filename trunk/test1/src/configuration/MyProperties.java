@@ -130,10 +130,14 @@ public class MyProperties {
 	}
 
 	public void setProperty(String key, String value, boolean writeEncripted){
+		final String metodo="setProperty";
+		logger.start(metodo);
 		if(properties==null){
 			properties=new Properties();
 		}
 		properties.setProperty(writeEncripted?MyCript.encrypt(key):key,
 										writeEncripted?MyCript.encrypt(value):value);
+		logger.end(metodo);
+		
 	}
 }
