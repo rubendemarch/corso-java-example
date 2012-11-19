@@ -72,7 +72,6 @@ public class TestReadFileWriteDb {
 			
 			ColumnDescriptorInterface cdi;
 			
-			List<HashMap<String,Object>> alunni;
 			BufferedReader bufferedReader=null;
 			try {
 				bufferedReader= new BufferedReader(new FileReader(new File("3.txt")));
