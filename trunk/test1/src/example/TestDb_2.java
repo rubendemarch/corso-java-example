@@ -4,6 +4,7 @@
 package example;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -110,7 +111,10 @@ public class TestDb_2 {
 				
 				for (int ci =0;ci<di.getDescriptors().size();ci++ ) {
 					cdi=di.getDescriptors().get(ci);
-					params.add(alunno.get(cdi.getColumName()));
+					params.add(
+						"USER_ID".equals(cdi.getColumName())?
+							i+"_"+alunno.get(cdi.getColumName()):
+							alunno.get(cdi.getColumName()));
 				}
 				
 				System.out.println(dbo.dynamicExecuteUpdate(sqlInsert.toString(), params));
@@ -140,7 +144,11 @@ public class TestDb_2 {
 				
 				for (int ui=3;ui<6;ui++) {
 					cdi=di.getDescriptors().get(ui);
-					params.add(alunno.get(cdi.getColumName()));
+					params.add(
+						"data_nascita".equals(cdi.getColumName())?
+							Timestamp.valueOf("2012-12-21 21:21:21")
+							:alunno.get(cdi.getColumName())
+							);
 				}
 				params.add(alunno.get(di.getDescriptors().get(0).getColumName()));
 				
