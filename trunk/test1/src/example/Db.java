@@ -77,7 +77,7 @@ public class Db {
 			di.addColumnDescriptor(new ColumnDescriptor("USER_ID",						36, 	50,true,' ', ";",""));
 			di.addColumnDescriptor(new ColumnDescriptor("nome",								35, 	50,true,' ', ";",""));
 			di.addColumnDescriptor(new ColumnDescriptor("cognome",						35, 	50,true,' ', ";",""));
-			di.addColumnDescriptor(new ColumnDescriptor("data_nascita",					0, 		50,true,' ', ";","YYYYMMdd"));
+			di.addColumnDescriptor(new ColumnDescriptor("data_nascita",					0, 		50,true,' ', ";","yyyyMMdd"));
 			di.addColumnDescriptor(new ColumnDescriptor("sesso",								1, 		1,true,' ', ";",""));
 			di.addColumnDescriptor(new ColumnDescriptor("cf",									16, 	16,true,' ', ";",""));
 			di.addColumnDescriptor(new ColumnDescriptor("STATO_NASCITA",				35, 	50,true,' ', ";",""));
