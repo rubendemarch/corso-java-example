@@ -204,7 +204,7 @@ public class Persona {
 			userID=
 				new StringBuilder(cf)
 			.append(
-				new SimpleDateFormat("YYYYMMDDHHmmssSSS")
+				new SimpleDateFormat("yyyyMMddHHmmssSSS")
 					.format(
 						Calendar.getInstance().getTime()))
 			.append(

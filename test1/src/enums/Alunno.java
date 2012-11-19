@@ -12,7 +12,7 @@ public enum Alunno {
 	USER_ID(						"USER_ID",						36, 	50,true,' ', ";",""),
 	NOME(							"nome",								35, 	50,true,' ', ";",""),
 	COGNOME(						"cognome",						35, 	50,true,' ', ";",""),
-	DATA_NASCITA(				"data_nascita",					0, 		50,true,' ', ";","YYYYMMdd"),
+	DATA_NASCITA(				"data_nascita",					0, 		50,true,' ', ";","yyyyMMdd"),
 	SESSO(							"sesso",								1, 		1,true,' ', ";",""),
 	CF(								"cf",									16, 	16,true,' ', ";",""),
 	STATO_NASCITA(			"STATO_NASCITA",				35, 	50,true,' ', ";",""),
