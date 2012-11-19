@@ -4,11 +4,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import util.StringFormat;
 import bussinessObject.ColumnDescriptor;
 import bussinessObject.Descriptors;
 import bussinessObject.interfaces.ColumnDescriptorInterface;
@@ -80,18 +82,23 @@ public class TestReadFileWriteDb {
 			}
 			
 			String line;
-			while( (line=bufferedReader.readLine())!=null ){
-			
-			//for (int i =0;i<alunni.size();i++) {
-				alunno=alunni.get(i);
-				params.clear();
+			try {
+				while( (line=bufferedReader.readLine())!=null ){
 				
-				for (int ci =0;ci<di.getDescriptors().size();ci++ ) {
-					cdi=di.getDescriptors().get(ci);
-					params.add(alunno.get(cdi.getColumName()));
+				//for (int i =0;i<alunni.size();i++) {
+					alunno=StringFormat.formatMap(line, true, di);
+					params.clear();
+					
+					for (int ci =0;ci<di.getDescriptors().size();ci++ ) {
+						cdi=di.getDescriptors().get(ci);
+						params.add(alunno.get(cdi.getColumName()));
+					}
+					
+					System.out.println(dbo.dynamicExecuteUpdate(sqlInsert.toString(), params));
 				}
-				
-				System.out.println(dbo.dynamicExecuteUpdate(sqlInsert.toString(), params));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			
 			
