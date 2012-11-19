@@ -3,6 +3,7 @@
  */
 package file;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,6 +19,7 @@ public class RootFile {
 	private MyLogger logger;
 	private File f=null;
 	private PrintStream printStream=null;
+
 	/**
 	 * 
 	 */
