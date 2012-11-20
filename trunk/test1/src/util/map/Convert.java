@@ -46,7 +46,26 @@ public class Convert {
 					}
 				}
 			} else {
-//TODO ....
+				appo=l.substring(0,cdi.getFileSize());
+				l=l.substring(cdi.getFileSize());
+				
+				appo=cdi.isLeftAlign()?
+						StringUtils.stripEnd(appo,cdi.getPadChar()+""):
+						StringUtils.stripStart(appo,cdi.getPadChar()+"");
+
+				if (StringUtils.isEmpty(cdi.getPattern())) {
+					map.put(cdi.getColumName(), appo);
+				} else {
+					try {
+						map.put(cdi.getColumName(),
+							new Timestamp(
+								new SimpleDateFormat(cdi.getPattern())
+									.parse(appo).getTime()));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 
