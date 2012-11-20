@@ -111,33 +111,5 @@ public class StringFormat {
 		return "";
 	}
 
-	public static HashMap<String, Object> formatMap(	String line,
-																				boolean isCsvFormat,
-																				DescriptorsInterface di){
-		HashMap<String,Object>map=new HashMap<String,Object>();
-		StringTokenizer tokenizer = new StringTokenizer(line,";");
-		for(ColumnDescriptorInterface cdi:di.getDescriptors()){
-			if(isCsvFormat){
-				if(StringUtils.isEmpty(cdi.getPattern())){
-					map.put(cdi.getColumName(), tokenizer.nextToken());
-				}else{
-					try {
-						map.put(
-							cdi.getColumName(),
-							new Timestamp(
-								new SimpleDateFormat(
-									cdi.getPattern()).parse(
-										tokenizer.nextToken()).getTime()));
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}else{
-				
-			}
-		}
-		
-		return map;
-	}
+
 }
