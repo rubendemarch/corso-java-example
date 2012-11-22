@@ -14,6 +14,8 @@ import util.MyLogger;
 import util.dbo.Convert;
 import bussinessObject.Alunno;
 import bussinessObject.TitoloDiStudio;
+import bussinessObject.interfaces.ColumnDescriptorInterface;
+import bussinessObject.interfaces.DescriptorsInterface;
 import dbo.RootDbo;
 import dbo.connection.Connessione;
 
@@ -155,5 +157,19 @@ public class DboAlunni
 		}
 		logger.end(metodo);
 		return alunnoList;
+	}
+
+	@Override
+	public List<HashMap<String, Object>> dynamicReadAlunni(
+			DescriptorsInterface di) {
+		
+		StringBuilder sql = new StringBuilder("SELECT ");
+		for (ColumnDescriptorInterface cdi: di.getDescriptors()) {
+			sql.append(cdi.getColumName()).append(",");
+		}
+		sql=sql.deleteCharAt(sql.length()-1);
+		sql.append(" FROM alunni");
+		
+		return dynamicExecuteQuery(di, sql.toString(), null);
 	}
 }

@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import util.MyLogger;
+import bussinessObject.ColumnDescriptor;
+import bussinessObject.Descriptors;
 import bussinessObject.interfaces.ColumnDescriptorInterface;
 import bussinessObject.interfaces.DescriptorsInterface;
 import dbo.connection.Connessione;
@@ -177,4 +179,49 @@ public class RootDbo {
 		return ps.executeUpdate();
 	}
 
+	public DescriptorsInterface readConfig(String configName) {
+		final String metodo="readConfig";
+		logger.start(metodo);
+		StringBuilder sql =
+			new StringBuilder("SELECT ")
+				.append("COL_NAME,TBL_NAME,DB_SIZE,FILE_SIZE,IS_LEFT_ALIGN,PAD_CHAR,")
+				.append("SEP,PATTERN FROM CONFIG_DESCRIPTOR ")
+				.append("WHERE NOME_DESCRIPTOR=? ORDER BY INDEX_ORDER");
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		DescriptorsInterface di=new Descriptors();
+		try {
+			ps = getPreparedStatement(sql.toString());
+			ps.setObject(1, configName);
+			rs = executeQuery(ps);
+			if(rs!=null){
+				try {
+					while(rs.next()){
+						di.addColumnDescriptor(
+							new ColumnDescriptor(
+								rs.getString("COL_NAME"),
+								rs.getInt("DB_SIZE"),
+								rs.getInt("FILE_SIZE"),
+								rs.getBoolean("IS_LEFT_ALIGN"),
+								((String)rs.getObject("PAD_CHAR"))
+									.charAt(0),
+								rs.getString("SEP"),
+								rs.getString("PATTERN")));
+					}
+				} catch (SQLException e) {
+					logger.error(metodo, "scorro risultato", e);
+					throw e;
+				} catch (Exception e) {
+					logger.error(metodo, "COSTRUZIONE ALUNNO", e);
+					throw e;
+				}
+			}
+		} catch (SQLException e) {
+			logger.error(metodo, "", e);
+		}finally{
+			close(ps,rs);
+		}
+		logger.end(metodo);
+		return di;
+	}
 }
