@@ -172,4 +172,44 @@ public class DboAlunni
 		
 		return dynamicExecuteQuery(di, sql.toString(), null);
 	}
+
+	@Override
+	public int dynamicInsertAlunno(DescriptorsInterface di,
+			HashMap<String, Object> alunno) {
+		List<Object>params = new ArrayList<Object>();
+		StringBuilder sqlInsert = new StringBuilder("INSERT INTO ALUNNI (");
+		StringBuilder sqlInsertParam = new StringBuilder();
+		for (ColumnDescriptorInterface cdi: di.getDescriptors()) {
+			sqlInsert.append(cdi.getColumName()).append(",");
+			sqlInsertParam.append("?,");
+			params.add(alunno.get(cdi.getColumName()));
+		}
+		sqlInsert=sqlInsert.deleteCharAt(sqlInsert.length()-1);
+		sqlInsert.append(")VALUES(")
+					.append(sqlInsertParam.deleteCharAt(sqlInsertParam.length()-1))
+					.append(")");
+		return dynamicExecuteUpdate(sqlInsert.toString(), params);
+	}
+
+	@Override
+	public int dynamicUpdateAlunno(DescriptorsInterface di,
+			HashMap<String, Object> alunno) {
+		StringBuilder sqlUpdate = new StringBuilder("UPDATE ALUNNI SET ");
+		StringBuilder sqlwhere = new StringBuilder(" WHERE ");
+		List<Object>params = new ArrayList<Object>();
+		Object k=null;
+		for (ColumnDescriptorInterface cdi: di.getDescriptors()) {
+			if(!"user_id".equalsIgnoreCase(cdi.getColumName())){
+				sqlUpdate.append(cdi.getColumName()).append("=?,");
+				params.add(alunno.get(cdi.getColumName()));
+			}else{
+				sqlwhere.append(cdi.getColumName()).append("=?");
+				k=alunno.get(cdi.getColumName());
+			}
+		}
+		params.add(k);
+		sqlUpdate=sqlUpdate.deleteCharAt(sqlUpdate.length()-1);
+		sqlUpdate.append(sqlwhere);
+		return dynamicExecuteUpdate(sqlUpdate.toString(), params);
+	}
 }

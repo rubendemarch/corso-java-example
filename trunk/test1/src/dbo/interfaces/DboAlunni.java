@@ -34,4 +34,16 @@ public interface DboAlunni {
 	 * @return restituisce tutti gli alunni presenti nella tabella ALUNNI
 	 */
 	public List<HashMap<String, Object>>dynamicReadAlunni(DescriptorsInterface di);
+
+	/**
+	 * 
+	 * @return il numero di alunni inseriti
+	 */
+	public int dynamicInsertAlunno(DescriptorsInterface di, HashMap<String, Object> alunno);
+
+	/**
+	 * 
+	 * @return il numero di alunni aggiornati
+	 */
+	public int dynamicUpdateAlunno(DescriptorsInterface di, HashMap<String, Object> alunno);
 }

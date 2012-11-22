@@ -101,6 +101,7 @@ public class RootDbo {
 		ResultSet rs=null;
 		ArrayList<HashMap<String,Object>> res=null;
 		try {
+			logger.debug(metodo, sql);
 			ps = getPreparedStatement(sql);
 			setParams(params, ps);
 			rs = executeQuery(ps);
@@ -139,6 +140,7 @@ public class RootDbo {
 
 		if (params!=null) {
 			for (int i = 0; i < params.size(); i++) {
+				logger.trace(metodo, params.get(i).toString());
 				ps.setObject(i + 1, params.get(i));
 			}
 		}
@@ -158,6 +160,7 @@ public class RootDbo {
 		logger.start(metodo);
 		PreparedStatement ps=null;
 		try {
+			logger.debug(metodo, sql);
 			ps = getPreparedStatement(sql);
 			setParams(params, ps);
 			return executeUpdate(ps);
