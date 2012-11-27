@@ -1,3 +1,4 @@
+<%@page import="java.util.GregorianCalendar"%>
 <%@page import="java.util.TimeZone"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.util.Locale"%>
@@ -14,22 +15,24 @@
 <table>
 <tr>
 <th>Id Disponibili</th>
-<th>ora in quel posto</th>
+<th colspan="3">ora in quel posto</th>
 </tr>
 <%
 SimpleDateFormat sdf =
 	new SimpleDateFormat(
-		"EEEEEEEEE d MMMMMMMMM YYYY H:m.s SSS",
-		Locale.ITALIAN);
+		"EEEEEEEEE d MMMMMMMMM YYYY H:m.s SSS");
+Calendar nowHere = Calendar.getInstance();
+Calendar c;
 for(String id: TimeZone.getAvailableIDs()){
+	c=new GregorianCalendar(TimeZone.getTimeZone(id));
+	c.setTimeInMillis(nowHere.getTimeInMillis());
+	sdf.setTimeZone(TimeZone.getTimeZone(id));
 %>
 <tr>
 <th><%=id%></th>
-<th>
-<%=sdf.format(
-		Calendar.getInstance(
-			TimeZone.getTimeZone(id)
-		).getTime())%></th>
+<th><%=sdf.format(c.getTime())%></th>
+<th><%=sdf.format(Calendar.getInstance().getTime())%></th>
+<th><%=sdf.format(Calendar.getInstance(TimeZone.getTimeZone(id)).getTime())%></th>
 </tr>
 <%
 }
