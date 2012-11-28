@@ -1,5 +1,6 @@
 package it.alfasoft.corso.java.servlet;
 
+import it.alfasoft.corso.java.lang.MultipleResourceBundle;
 import it.alfasoft.corso.java.util.constants.Session;
 import it.alfasoft.corso.java.util.log.MyLogger;
 
@@ -55,9 +56,8 @@ public class RootServlet extends HttpServlet {
 	}
 
 	protected ResourceBundle loadLanguage(HttpServletRequest req, List<String> resouces){
-		
-		Locale loc =  getLocale(req);
-		
-		return ResourceBundle.getBundle("",loc);
+		return new MultipleResourceBundle(
+			getLocale(req),
+			resouces);
 	}
 }
