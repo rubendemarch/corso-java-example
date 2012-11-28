@@ -18,7 +18,6 @@ public class MultipleResourceBundle extends ResourceBundle {
 	//private List<String>bundles;
 	//private Locale locale;
 	private List<ResourceBundle>bundles;
-	private Enumeration<String> keys;
 
 	/**
 	 * @param locale
@@ -34,22 +33,11 @@ public class MultipleResourceBundle extends ResourceBundle {
 				ResourceBundle.getBundle(	bundle,
 														locale));
 		}
-		initKeys();
 	}
 
 	@Override
 	public Enumeration<String> getKeys() {
-		return keys;
-	}
-
-	private void initKeys() {
-		List<String>keys=new ArrayList<String>();
-		for (ResourceBundle bundle:bundles) {
-			while(bundle.getKeys().hasMoreElements()){
-				keys.add(bundle.getKeys().nextElement());
-			}
-		}
-		this.keys=Collections.enumeration(keys);
+		return null;
 	}
 
 	@Override
