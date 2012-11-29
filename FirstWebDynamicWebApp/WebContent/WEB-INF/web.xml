@@ -20,8 +20,8 @@
 
 
 <context-param>
-<param-name>language</param-name>
-<param-value>it_IT fr_FR en_US</param-value>
+	<param-name>language</param-name>
+	<param-value>it_IT fr_FR en_US</param-value>
 </context-param>
 
 
