@@ -4,13 +4,12 @@ import it.alfasoft.corso.java.lang.MultipleResourceBundle;
 import it.alfasoft.corso.java.util.constants.Session;
 import it.alfasoft.corso.java.util.log.MyLogger;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.servlet.Servlet;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +22,7 @@ public class RootServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private MyLogger log;
-	//connessione
+	//TODO connessione
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -34,18 +33,8 @@ public class RootServlet extends HttpServlet {
 		final String metodo="costruttore";
 		log.start(metodo);
 		
-		//.....
+		//.....???
 		
-		log.end(metodo);
-	}
-
-	/**
-	 * @see Servlet#init(ServletConfig)
-	 */
-	public void init(ServletConfig config) throws ServletException {
-		final String metodo="init";
-		log.start(metodo);
-		super.init(config);
 		log.end(metodo);
 	}
 
@@ -53,21 +42,24 @@ public class RootServlet extends HttpServlet {
 	 * @see Servlet#destroy()
 	 */
 	public void destroy() {
-		// TODO connessione
+		// TODO connessione <------ :-)
 	}
 
 	protected Locale getLocale(HttpServletRequest request){
 		final String metodo="getLocale";
 		log.start(metodo);
-		String language = (String) getServletContext().getAttribute("language");
+		String language = (String) getServletContext().getInitParameter("language");
 		log.info(metodo, language);
 		if(request.getSession().getAttribute(Session.LANG)==null){
-
-			Locale l=null;
-			while (request.getLocales().hasMoreElements()){
-				l=request.getLocales().nextElement();
-				if(language.contains(
-					l.getDisplayLanguage())){
+			List<Locale>locs =
+				Collections.list(request.getLocales());
+			request
+			.getSession()
+				.setAttribute(
+					Session.LANG,
+					request.getLocale());
+			for(Locale l: locs){
+				if(language.contains(l.toString())){
 					request
 						.getSession()
 							.setAttribute(
@@ -76,11 +68,6 @@ public class RootServlet extends HttpServlet {
 					break;
 				}
 			}
-			//request.getSession().setAttribute(Session.LANG, request.getLocale());
-			
-			
-			
-			
 		}
 		//TODO VERIFICA SE DEVE CARICARE UNA LINGUA SALVATA NEL PROFILO
 		log.end(metodo);
