@@ -13,16 +13,23 @@
 		<servlet-class>it.alfasoft.corso.java.servlet.Home</servlet-class>
 	</servlet>
 
+	<servlet>
+		<servlet-name>ManageLanguages</servlet-name>
+		<servlet-class>it.alfasoft.corso.java.servlet.commons.ManageLanguages</servlet-class>
+	</servlet>
+
 	<servlet-mapping>
 		<servlet-name>HomeServlet</servlet-name>
-		<url-pattern>/Dog</url-pattern>
+		<url-pattern>/Home</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ManageLanguages</servlet-name>
+		<url-pattern>/ManageLanguage</url-pattern>
 	</servlet-mapping>
 
-
-<context-param>
-	<param-name>language</param-name>
-	<param-value>it_IT fr_FR en_US</param-value>
-</context-param>
-
-
+	<context-param>
+		<param-name>managedLanguages</param-name>
+		<param-value>it_IT fr_FR en_US</param-value>
+	</context-param>
 </web-app>

@@ -1,4 +1,4 @@
-<%@page import="it.alfasoft.corso.java.util.constants.Session"%>
+<%@page import="it.alfasoft.corso.java.util.constants.Request"%>
 <%@page import="java.util.ResourceBundle"%>
 <%@page import="java.util.GregorianCalendar"%>
 <%@page import="java.util.TimeZone"%>
@@ -10,7 +10,7 @@
 
 <%
 ResourceBundle rb=
-	(ResourceBundle)request.getAttribute(Session.LANG);
+	(ResourceBundle)request.getAttribute(Request.ResourceBundle);
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -19,6 +19,9 @@ ResourceBundle rb=
 <title><%=rb.getString("title")%></title>
 </head>
 <body>
+
+<jsp:include page="commons/include/comboLanguage.jsp"></jsp:include>
+<br>
 <table>
 <tr>
 <th><%=rb.getString("id_disp")%></th>
