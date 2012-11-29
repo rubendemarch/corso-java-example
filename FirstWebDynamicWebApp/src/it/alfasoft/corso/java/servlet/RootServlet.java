@@ -31,13 +31,22 @@ public class RootServlet extends HttpServlet {
 	public RootServlet() {
 		super();
 		log=new MyLogger(this.getClass());
+		final String metodo="costruttore";
+		log.start(metodo);
+		
+		//.....
+		
+		log.end(metodo);
 	}
 
 	/**
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init(ServletConfig config) throws ServletException {
-		// TODO connessione
+		final String metodo="init";
+		log.start(metodo);
+		super.init(config);
+		log.end(metodo);
 	}
 
 	/**
@@ -47,17 +56,40 @@ public class RootServlet extends HttpServlet {
 		// TODO connessione
 	}
 
-	protected Locale getLocale(HttpServletRequest req){
-		if(req.getSession().getAttribute(Session.LANG)==null){
-			req.getSession().setAttribute(Session.LANG, req.getLocale());
+	protected Locale getLocale(HttpServletRequest request){
+		final String metodo="getLocale";
+		log.start(metodo);
+		String language = (String) getServletContext().getAttribute("language");
+		log.info(metodo, language);
+		if(request.getSession().getAttribute(Session.LANG)==null){
+
+			Locale l=null;
+			while (request.getLocales().hasMoreElements()){
+				l=request.getLocales().nextElement();
+				if(language.contains(
+					l.getDisplayLanguage())){
+					request
+						.getSession()
+							.setAttribute(
+								Session.LANG,
+								l);
+					break;
+				}
+			}
+			//request.getSession().setAttribute(Session.LANG, request.getLocale());
+			
+			
+			
+			
 		}
 		//TODO VERIFICA SE DEVE CARICARE UNA LINGUA SALVATA NEL PROFILO
-		return (Locale)req.getSession().getAttribute(Session.LANG);
+		log.end(metodo);
+		return (Locale)request.getSession().getAttribute(Session.LANG);
 	}
 
-	protected ResourceBundle loadLanguage(HttpServletRequest req, List<String> resouces){
+	protected ResourceBundle loadLanguage(HttpServletRequest request, List<String> resouces){
 		return new MultipleResourceBundle(
-			getLocale(req),
+			getLocale(request),
 			resouces);
 	}
 }
