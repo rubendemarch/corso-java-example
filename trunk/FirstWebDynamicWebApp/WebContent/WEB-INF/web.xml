@@ -15,6 +15,14 @@
 
 	<servlet-mapping>
 		<servlet-name>HomeServlet</servlet-name>
-		<url-pattern>/Home</url-pattern>
+		<url-pattern>/Dog</url-pattern>
 	</servlet-mapping>
+
+
+<context-param>
+<param-name>language</param-name>
+<param-value>it_IT fr_FR en_US</param-value>
+</context-param>
+
+
 </web-app>
