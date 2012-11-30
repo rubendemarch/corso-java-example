@@ -3,8 +3,9 @@
  */
 package it.alfasoft.corso.java.lang;
 
+import it.alfasoft.corso.java.util.log.MyLogger;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
@@ -15,8 +16,7 @@ import java.util.ResourceBundle;
  *
  */
 public class MultipleResourceBundle extends ResourceBundle {
-	//private List<String>bundles;
-	//private Locale locale;
+	private MyLogger log;
 	private List<ResourceBundle>bundles;
 
 	/**
@@ -26,29 +26,29 @@ public class MultipleResourceBundle extends ResourceBundle {
 	public MultipleResourceBundle(
 			Locale locale,
 			List<String> bundles) {
-		//this.locale = locale;
+		log=new MyLogger(this.getClass());
 		this.bundles= new ArrayList<ResourceBundle>();
 		for (String bundle : bundles) {
 			this.bundles.add(
-				ResourceBundle.getBundle(	bundle,
-														locale));
+				ResourceBundle.getBundle(bundle,locale));
 		}
 	}
 
 	@Override
 	public Enumeration<String> getKeys() {
+		//TODO !!!!!!!!!!!!!
 		return null;
 	}
 
 	@Override
 	protected Object handleGetObject(String key) {
+		final String metodo="handleGetObject";
 		Object val=null;
 		for (ResourceBundle bundle : bundles) {
 			try {
 				val=bundle.getObject(key);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.trace(metodo, key + " not found");
 			}
 			if(val!=null){
 				break;

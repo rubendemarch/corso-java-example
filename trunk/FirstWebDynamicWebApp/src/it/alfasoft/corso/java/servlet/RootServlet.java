@@ -9,11 +9,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
 import javax.servlet.Servlet;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,9 +48,10 @@ public class RootServlet extends HttpServlet {
 	protected Locale getLocale(HttpServletRequest request){
 		final String metodo="getLocale";
 		log.start(metodo);
-		String language = (String) getServletContext().getInitParameter("managedLanguages");
-		log.info(metodo, language);
 		if(request.getSession().getAttribute(Session.LANG)==null){
+			String language = 
+				(String) getServletContext().getInitParameter("managedLanguages");
+			log.info(metodo, language);
 			List<Locale>locs =
 				Collections.list(request.getLocales());
 			request
@@ -77,8 +76,8 @@ public class RootServlet extends HttpServlet {
 	}
 
 	protected void loadLanguage(
-		HttpServletRequest request,
-		List<String> resouces){
+			HttpServletRequest request,
+			List<String> resouces){
 		Locale locale = getLocale(request);
 		request.setAttribute(
 			Request.ResourceBundle,
