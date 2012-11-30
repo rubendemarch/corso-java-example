@@ -26,10 +26,11 @@
 	<servlet-mapping>
 		<servlet-name>ManageLanguages</servlet-name>
 		<url-pattern>/ManageLanguage</url-pattern>
+		
 	</servlet-mapping>
 
 	<context-param>
 		<param-name>managedLanguages</param-name>
-		<param-value>it_IT fr_FR en_US</param-value>
+		<param-value>it fr en</param-value>
 	</context-param>
 </web-app>

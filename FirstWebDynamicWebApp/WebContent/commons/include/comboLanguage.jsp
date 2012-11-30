@@ -7,11 +7,13 @@ List<Locale> managedLanguages=
 Locale locale=
 (Locale)request.getAttribute(Request.LOCALE);
 %>
-<form name="chooseLanguage" action="./ManageLanguage">
+<form
+	name="chooseLanguage"
+	action="./ManageLanguage"
+	method="post">
 <select name="language" onchange="submit()">
 <%
 for(Locale l:managedLanguages){
-
 %>
 	<option
 		value="<%=l%>"
