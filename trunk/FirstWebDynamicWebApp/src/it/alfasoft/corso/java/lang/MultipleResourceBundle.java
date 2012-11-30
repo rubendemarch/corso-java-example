@@ -6,6 +6,7 @@ package it.alfasoft.corso.java.lang;
 import it.alfasoft.corso.java.util.log.MyLogger;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
@@ -18,6 +19,7 @@ import java.util.ResourceBundle;
 public class MultipleResourceBundle extends ResourceBundle {
 	private MyLogger log;
 	private List<ResourceBundle>bundles;
+	private Enumeration<String> keys;
 
 	/**
 	 * @param locale
@@ -32,12 +34,27 @@ public class MultipleResourceBundle extends ResourceBundle {
 			this.bundles.add(
 				ResourceBundle.getBundle(bundle,locale));
 		}
+		initKeys();
 	}
 
 	@Override
 	public Enumeration<String> getKeys() {
-		//TODO !!!!!!!!!!!!!
-		return null;
+		return keys;
+	}
+
+	private void initKeys() {
+		final String metodo="initKeys";
+		log.start(metodo);
+		List<String>keys=new ArrayList<String>();
+		List<String>bundleKeys;
+		for (ResourceBundle bundle:bundles) {
+			bundleKeys=Collections.list(bundle.getKeys());
+			for (String bundleKey : bundleKeys) {
+				keys.add(bundleKey);
+			}
+		}
+		this.keys=Collections.enumeration(keys);
+		log.end(metodo);
 	}
 
 	@Override
