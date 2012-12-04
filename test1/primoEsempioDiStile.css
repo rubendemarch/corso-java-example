@@ -1,3 +1,46 @@
 body{
 	background-color: silver;
+	font-size: 12px;
+	font-family: verdana;
+}
+
+body.principale{
+	background-color: pink;
+}
+
+table{
+	font-size: 6px;
+}
+
+table.a{
+	height:95%;
+	width:95%;
+	border:1px;
+	border-color:green;
+	background-color:orange;
+	font-size: 10px;
+	margin: 3px;
+}
+
+tr.a{
+	background-color:maroon;
+	font-size: 11px;
+	margin: 4px;
+	border-color: blue;
+}
+
+td.a{
+	border:1px;
+	border-style:solid;
+	background-color:yellow;
+	font-size: 12px;
+	margin: 6px;
+	border-color: black;
+}
+
+th.a{
+	background-color:aqua;
+	font-size: 13px;
+	border-style:groove;
+	margin: 7px;
 }

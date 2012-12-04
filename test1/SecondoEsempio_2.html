@@ -8,8 +8,9 @@
 	href="primoEsempioDiStile.css">
 	
 <title>Secondo Esempio</title>
+<script type="text/javascript" src="primoFileJS.js"></script>
 </head>
-<body>
+<body class="principale">
 	<table width="80%" height="90%" align="center" bgcolor="white" border="1" bordercolor="black">
 		<tr>
 			<!--banner-->
@@ -54,26 +55,26 @@
 		<tr>
 			<!--form-->
 			<td align="center">
-				<table height="95%" width="95%" bgcolor="yellow" border="1" bordercolor="green">
-					<tr>
+				<table class="a">
+					<tr class="a">
 						<!--prima riga-->
-						<td>nome</td>
-						<td><input type="text" name="nome"></td>
-						<td>cognome</td>
-						<td><input type="text" name="cognome"></td>
+						<th class="a">nome</th>
+						<td class="a"><input type="text" name="nome"></td>
+						<td class="a">cognome</td>
+						<td class="a"><input type="text" name="cognome"></td>
 					</tr>
-					<tr>
+					<tr class="a">
 						<!--seconda riga-->
-						<td>data di&nbsp;nascita</td>
-						<td><input type="text" name="dataNascita"></td>
-						<td>Comune</td>
-						<td><input type="text" name="comune"></td>
+						<td class="a">data di&nbsp;nascita</td>
+						<td class="a"><input type="text" name="dataNascita"></td>
+						<th class="a">Comune</th>
+						<td class="a"><input type="text" name="comune"></td>
 					</tr>
 					<tr>
 						<!--terza riga-->
-						<td>telefono</td>
+						<td class="a">telefono</td>
 						<td><input type="text" name="comune"></td>
-						<td colspan="2"><input type="submit" onclick="alert('grazie!!!');" onmouseout="alert('daiiiiiiiiiiii registrati!!!!!!!')">
+						<td colspan="2"><input type="submit" onclick="ringrazia()" onmouseout="registrati()">
 						</td>
 					</tr>
 				</table>
