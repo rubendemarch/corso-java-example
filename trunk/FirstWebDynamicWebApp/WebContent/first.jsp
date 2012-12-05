@@ -44,5 +44,42 @@ for(String id: TimeZone.getAvailableIDs()){
 }
 %>
 </table>
+
+<table border="1" bordercolor="blue" >
+	<tr>
+		<td>&nbsp;</td>
+<%
+for(Locale localeIntestazione :Locale.getAvailableLocales()){
+%>
+		<th>
+	<%=localeIntestazione.getISO3Language()%>
+		<br>
+	<%=localeIntestazione.getDisplayCountry()%>
+		<br>
+	<%=localeIntestazione.getDisplayLanguage()%>
+		</th>
+<%
+}
+%>
+	</tr>
+<%
+for(Locale localeRiga :Locale.getAvailableLocales()){
+%>
+	<tr>
+		<th><%=localeRiga.getDisplayLanguage()%></th>
+	<%
+	for(Locale localeColonna :Locale.getAvailableLocales()){
+	%>
+		<td><%=localeRiga.getDisplayLanguage(localeColonna)%></td>
+	<%
+	}
+	%>
+	</tr>
+<%
+}
+%>
+</table>
+
+
 </body>
 </html>
