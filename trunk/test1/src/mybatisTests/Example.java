@@ -5,7 +5,6 @@ package mybatisTests;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,9 +39,9 @@ public class Example {
 			e.printStackTrace();
 		}
 		SqlSession sql =sqlSessionFactory.openSession();
-		List< Object> list= null;
+		List< HashMap<String,Object>> list= null;
 		try {
-			list = sql.selectList("language.languageList");
+			list =(List<HashMap<String,Object>>)(List<?>)sql.selectList("language.languageList");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
