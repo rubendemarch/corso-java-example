@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+ 
+	<appender name="RootFileAppender" class="org.apache.log4j.DailyRollingFileAppender"><!-- rolling file appender serve per poter far si che quando superata la dimensione massima venga creato un nuovo file log, va poi settato -->
+		<param name="File" value="C:/log/e-commerce.log" />
+		<param name="append" value="true"/>
+		<param name="MaxFileSize" value="10kB" /><!--  dimensione massima di ogni file -->
+		<param name="MaxBackupIndex" value="10" /><!-- numero massimo di file backup creabili una volta finiti ritorna al primo e li sovrascrive -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%r][%d{ISO8601}][%-5p][%t][%x][%c]%m%n " /><!-- qui viene formattato il testo visualizzato -->
+		</layout>
+	</appender>
+	
+	<!-- parte ibatis -->
+	<appender name="MybatisFileAppender" class="org.apache.log4j.DailyRollingFileAppender"><!-- rolling file appender serve per poter far si che quando superata la dimensione massima venga creato un nuovo file log, va poi settato -->
+		<param name="File" value="C:/log/Mybatis_e-ommerce.log" />
+		<param name="append" value="true"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%r][%d{ISO8601}][%-5p][%t][%x][%c]%m%n " /><!-- qui viene formattato il testo visualizzato -->
+		</layout>
+	</appender>
+	<!-- qua prende tutti i log al livello trace di ibatis -->
+	<logger name="org.apache.ibatis" additivity="false">
+	    <level value="TRACE"/>
+	    <appender-ref ref="MybatisFileAppender"/>
+	</logger>
+	<!-- questo fa vedere anche le query -->
+	<logger name="language" additivity="false">
+	    <level value="TRACE"/>
+	    <appender-ref ref="MybatisFileAppender"/>
+	</logger>
+<!-- fine parte ibatis -->
+<!-- send all error logs to my email address -->
+
+
+	<root>
+		<level value="WARN" /><!-- livello di visualizzazione -->
+		<appender-ref ref="RootFileAppender" />
+	</root>
+</log4j:configuration>
