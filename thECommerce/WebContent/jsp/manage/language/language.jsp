@@ -7,6 +7,7 @@
 ResourceBundle rb=
 	(ResourceBundle)request.getAttribute(
 		Request.ResourceBundle);
+
 %>
 <html>
 <head>
