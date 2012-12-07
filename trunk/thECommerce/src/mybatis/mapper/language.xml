@@ -10,4 +10,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO languages(ID_LANGUAGE,IS_VISIBLE)
 		VALUES(#{ID_LANGUAGE},#{IS_VISIBLE})
 	</insert>
+	<update id="update">
+		UPDATE languages SET IS_VISIBLE=#{IS_VISIBLE}
+		WHERE ID_LANGUAGE=#{ID_LANGUAGE}
+	</update>
 </mapper>

@@ -1,3 +1,4 @@
+<%@page import="java.math.BigDecimal"%>
 <%@page import="it.ecommerce.util.constants.Common"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.util.HashMap"%>
@@ -38,9 +39,9 @@ String lang;
 boolean isVisibile;
 for(HashMap<String,Object>managedLanguage:managedLanguages){
 	lang=(String)managedLanguage.get("ID_LANGUAGE");
-	isVisibile=(boolean)managedLanguage.get("IS_VISIBLE");
+	isVisibile=((BigDecimal)managedLanguage.get("IS_VISIBLE")).intValue()>0;
 %>
-<input type="checkbox" name="managed_<%=lang%>"<%if(isVisibile){%> checked<%}%>>
+<input type="checkbox" name="<%=lang%>"<%if(isVisibile){%> checked<%}%>>
 <%=new Locale(lang)
 					.getDisplayLanguage(inLocale)%>
 <br>
