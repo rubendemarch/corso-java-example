@@ -84,6 +84,10 @@ public class ManageLanguages extends RootServlet {
 			}
 		}
 		request.setAttribute(Request.TO_MANAGE_LANGUAGES, toManage);
+
+		request
+			.getRequestDispatcher("jsp/manage/language/language.jsp")
+				.forward(request, response);
 	}
 
 	private synchronized void updateLanguages(
@@ -99,6 +103,8 @@ public class ManageLanguages extends RootServlet {
 			sql.insert("language.add", toManage);
 		}
 		//2 aggiorna lo stato di visibilità delle lingue gestite
+		
+		sql.close();
 	}
 
 }
