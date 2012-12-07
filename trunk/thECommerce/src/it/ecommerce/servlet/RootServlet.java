@@ -94,9 +94,7 @@ public class RootServlet extends HttpServlet {
 		return (Locale)request.getSession().getAttribute(Session.LANG);
 	}
 
-	protected void loadLanguage(
-			HttpServletRequest request,
-			List<String> resouces){
+	protected void loadLanguage(HttpServletRequest request){
 		Locale locale = getLocale(request);
 		request.setAttribute(
 			Request.ResourceBundle,
