@@ -3,7 +3,11 @@ package it.eCommerce.servlet;
 
 import it.eCommerce.log.MyLogger;
 import it.eCommerce.util.constants.Common;
+import it.eCommerce.util.constants.Request;
+import it.eCommerce.util.constants.Session;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,12 +15,16 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
+
 import javax.servlet.Servlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
-import it.eCommerce.util.constants.Session;
-import it.eCommerce.util.constants.Request;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+
 
 /**
  * Servlet implementation class RootServlet
@@ -25,7 +33,8 @@ public class RootServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private MyLogger log;
-	//TODO connessione
+
+	protected SqlSessionFactory sqlSessionFactory=null;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -36,8 +45,20 @@ public class RootServlet extends HttpServlet {
 		final String metodo="costruttore";
 		log.start(metodo);
 		
-		//.....???
+		String resource = "mybatis/config/mybatis-config.xml";
+		InputStream inputStream=null;
 		
+		
+		try {
+			inputStream = Resources.getResourceAsStream(resource);
+		} catch (IOException e) {
+			log.fatal(metodo, "fallita SqlSessionFactoryBuilder", e);
+		}
+		try {
+			sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+		} catch (Exception e) {
+			log.fatal(metodo, "fallita SqlSessionFactoryBuilder", e);
+		}
 		log.end(metodo);
 	}
 
@@ -77,10 +98,7 @@ public class RootServlet extends HttpServlet {
 		log.end(metodo);
 		return (Locale)request.getSession().getAttribute(Session.LANG);
 	}
-
-	protected void loadLanguage(
-			HttpServletRequest request,
-			List<String> resouces){
+	protected void loadLanguage(HttpServletRequest request){
 		Locale locale = getLocale(request);
 		request.setAttribute(
 			Request.ResourceBundle,
