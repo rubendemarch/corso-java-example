@@ -2,8 +2,10 @@ package it.ecommerce.servlet.common.language;
 
 import it.ecommerce.servlet.RootServlet;
 import it.ecommerce.util.constants.Common;
+import it.ecommerce.util.constants.Request;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -48,27 +50,55 @@ public class ManageLanguages extends RootServlet {
 		process(request,response);
 	}
 
-	protected synchronized void process(HttpServletRequest request,
+	protected void process(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		
-		
+		loadLanguage(request);
 		String action = request.getParameter(Common.ACTION);
 		if(!StringUtils.isEmpty(action)){
-			//1 se hanno aggiunto una lingua la va a salvare nel db
-			
-			//2 aggiorna lo stato di visibilità delle lingue gestite
-			
+			updateLanguages(request,response);
 		}
-		SqlSession sql = sqlSessionFactory.openSession();
+		
 		//3 carico la lista delle lingue gestite
-		List<HashMap<String,Object>>list=
+		
+		SqlSession sql = sqlSessionFactory.openSession();
+		@SuppressWarnings("unchecked")
+		List<HashMap<String,Object>>managedLanguages=
 			(List<HashMap<String,Object>>)
 				(List<?>)sql.selectList("language.list");
+		sql.close();
+		request.setAttribute(Request.MANAGED_LANGUAGES, managedLanguages);
 		//4 carico la lista delle lingue da gestire
+		
+		List<Locale>toManage=new ArrayList<Locale>();
+		boolean find;
 		for (String locale: Locale.getISOLanguages()) {
-			
+			find=false;
+			for (HashMap<String,Object>managedLanguage:managedLanguages) {
+				if(locale.equals((String)managedLanguage.get("ID_LANGUAGE"))){
+					find=true;
+					break;
+				}
+			}
+			if(!find){
+				toManage.add(new Locale(locale));
+			}
 		}
-		
-		
+		request.setAttribute(Request.TO_MANAGE_LANGUAGES, toManage);
 	}
+
+	private synchronized void updateLanguages(
+			HttpServletRequest request,
+			HttpServletResponse response){
+		SqlSession sql=sqlSessionFactory.openSession();
+		//1 se hanno aggiunto una lingua la va a salvare nel db
+		String id_language= request.getParameter("toManage");
+		if(!"0000".equals(id_language)){
+			HashMap<String, Object>toManage=new HashMap<String, Object>();
+			toManage.put("ID_LANGUAGE", id_language);
+			toManage.put("IS_VISIBLE", false);
+			sql.insert("language.add", toManage);
+		}
+		//2 aggiorna lo stato di visibilità delle lingue gestite
+	}
+
 }
