@@ -26,7 +26,7 @@ import org.apache.ibatis.session.TransactionIsolationLevel;
  * Servlet implementation class ManageBrand
  */
 @WebServlet("/ManageBrand")
-public class ManageBrands extends HttpServlet {
+public class ManageBrands extends RootServlet {
 	private static final long serialVersionUID = 1L;
 	private MyLogger log;
 
