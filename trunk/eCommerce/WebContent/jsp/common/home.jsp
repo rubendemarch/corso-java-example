@@ -9,7 +9,13 @@
 </head>
 <body>
 
-<a href="./ManageLanguages">lingue</a>
+<a href="./ManageLanguages">Lingue</a>
+
+<br>
+
+<a href="./ManageBrand">Marche</a>
+
+
 
 </body>
 </html>
