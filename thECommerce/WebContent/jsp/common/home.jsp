@@ -10,6 +10,8 @@
 <body>
 
 <a href="./ManageLanguages">lingue</a>
+<br>
+<a href="./ManageBrands">marche</a>
 
 </body>
 </html>
