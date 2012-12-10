@@ -1,11 +1,13 @@
 package it.eCommerce.servlet.common.language;
 
+import it.eCommerce.log.MyLogger;
 import it.eCommerce.servlet.RootServlet;
 import it.eCommerce.util.constants.Common;
 import it.eCommerce.util.constants.Request;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -23,6 +25,9 @@ import org.apache.ibatis.session.SqlSession;
  */
 public class ManageLanguages extends RootServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private MyLogger log;
+	
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -37,7 +42,11 @@ public class ManageLanguages extends RootServlet {
 	 */
 	protected void doGet(HttpServletRequest request, 
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		process(request,response);
+		
+		log=new MyLogger(this.getClass());
+		final String metodo="doGet";
+		log.start(metodo);
 	}
 
 	/**
@@ -94,13 +103,32 @@ public class ManageLanguages extends RootServlet {
 		SqlSession sql=sqlSessionFactory.openSession();
 		//1 se hanno aggiunto una lingua la va a salvare nel db
 		String id_language= request.getParameter("toManage");
-		if(!"0000".equals(id_language)){
+		try{
+			if(!"0000".equals(id_language)){
+				HashMap<String, Object>toManage=new HashMap<String, Object>();
+				toManage.put("ID_LANGUAGE", id_language);
+				toManage.put("IS_VISIBLE", true);
+				sql.insert("language.add", toManage);
+			}
+			
+			//2 aggiorna lo stato di visibilità delle lingue gestite
+			
+			List<String> paramiters = Collections.list(request.getParameterNames());
 			HashMap<String, Object>toManage=new HashMap<String, Object>();
-			toManage.put("ID_LANGUAGE", id_language);
-			toManage.put("IS_VISIBLE", false);
-			sql.insert("language.add", toManage);
+						
+			for(String paramiter : paramiters){
+				if(paramiter.startsWith("managed")){
+					request.getParameter(paramiter);
+					toManage.put("ID_LANGUAGE", paramiter.substring(8));
+					toManage.put("IS_VISIBLE", Boolean.parseBoolean(
+							request.getParameter(paramiter)));
+				}
+			}
+			
+			sql.commit();
+		}catch(Exception e){
+			sql.rollback();
 		}
-		//2 aggiorna lo stato di visibilità delle lingue gestite
 		
 		sql.close();
 	}

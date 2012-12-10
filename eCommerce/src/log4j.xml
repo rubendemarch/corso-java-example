@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+	<appender name="RootFileAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="C:/log/eCommerce.log" />
+		<param name="Append" value="true"/>
+
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+			value="[%d{ISO8601}][%-5p][%t][%c]%m%n" />
+		</layout>
+	</appender>
+
+	<appender name="MybatisFileAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="C:/log/mybatiseCommerce.log" />
+		<param name="Append" value="true" />
+
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{ISO8601}][%-5p][%t][%c]%m%n" />
+		</layout>
+	</appender>
+
+	<logger name="org.apache.ibatis" additivity="false">
+		<level value="TRACE" />
+		<appender-ref ref="MybatisFileAppender" />
+	</logger>
+	<logger name="language" additivity="false">
+		<level value="TRACE" />
+		<appender-ref ref="MybatisFileAppender" />
+	</logger>
+
+	<root>
+		<level value="TRACE" />
+<!-- 		scegliere il value tra TRACE,DEBUG,INFO,WARN,ERROR,FATAL -->
+		<appender-ref ref="RootFileAppender" />
+	</root>
+</log4j:configuration>

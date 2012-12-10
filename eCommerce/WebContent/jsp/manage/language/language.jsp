@@ -1,3 +1,4 @@
+<%@page import="java.math.BigDecimal"%>
 <%@page import="it.eCommerce.util.constants.Common"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.util.HashMap"%>
@@ -7,15 +8,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- include il file props nella cartella commons con la dichiarazione del resource bundle e
+locale -->
+<%@include file="../../common/props.jsp" %>
 <%
-ResourceBundle rb=
-	(ResourceBundle)request.getAttribute(
-		Request.ResourceBundle);
-Locale inLocale=
-	(Locale)
-		request.getAttribute(
-			Request.LOCALE);
-
 List<HashMap<String,Object>>managedLanguages=
 	(List<HashMap<String,Object>>)
 		request.getAttribute(
@@ -38,9 +34,9 @@ String lang;
 boolean isVisibile;
 for(HashMap<String,Object>managedLanguage:managedLanguages){
 	lang=(String)managedLanguage.get("ID_LANGUAGE");
-	isVisibile=(boolean)managedLanguage.get("IS_VISIBLE");
+	isVisibile=((BigDecimal)managedLanguage.get("IS_VISIBLE")).intValue()>0;
 %>
-<input type="checkbox" name="managed_<%=lang%>"<%if(isVisibile){%> checked<%}%>>
+<input type="checkbox" name="<%=lang%>"<%if(isVisibile){%> checked<%}%>>
 <%=new Locale(lang)
 					.getDisplayLanguage(inLocale)%>
 <br>
