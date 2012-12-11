@@ -14,15 +14,27 @@ locale -->
 <%
 String msg = (String)request.getAttribute("msg");
 %>
+<!-- appena apre la pagina mette un attributo della servlet di manageBrand 
+dal metodo process -->
 <body onload="msg('<%=msg%>')">
+<jsp:include page="../../common/menu/headerMenu.jsp"></jsp:include>
 <form action="./ManageBrands" method="post">
-<input 
-type="hidden" 
-name="<%=Common.ACTION%>" 
-value="inserisci">
+<input type="hidden" name="<%=Common.ACTION%>" value="Inserisci">
+
+<!-- Nel file baseLabel.properties ci sono i nomi delle label -->
+
 <label><%=rb.getString("manage.brand.page.labelNome")%></label>
 <input type="text" value="" name="name" maxlength="100" size="50">
-<input type="submit" value="<%=rb.getString("common.save")%><%=rb.getString("manage.brand.page.save")%>"> 
+<br>
+<label><%=rb.getString("manage.brand.page.labelUrl")%></label>
+<input type="text" value="" name="url" maxlength="150" size="60">
+<br>
+<label><%=rb.getString("manage.brand.page.labelLogo_url")%></label>
+<input type="text" value="" name="logo_url" maxlength="150" size="60">
+<br>
+<input type="submit" value="<%=rb.getString("common.save")%><%=rb.getString("manage.brand.page.save")%>" align="middle">
+
+ 
 </form>
 </body>
 </html>

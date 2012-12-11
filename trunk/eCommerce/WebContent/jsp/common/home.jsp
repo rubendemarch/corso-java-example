@@ -13,7 +13,7 @@
 
 <br>
 
-<a href="./ManageBrand">Marche</a>
+<a href="./ManageBrands">Marche</a>
 
 
 

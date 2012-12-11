@@ -10,16 +10,19 @@ import org.apache.ibatis.session.SqlSession;
 public class KeyGenerator {
 	private static int keyMaxLenght=20;
 	private static char padChar = '0';
+	
+	
 	public static String KeyGen(SqlSession sql, String colName, String tableNmae, String prefix){
 		
 		HashMap<String, String> paramiterMap = new HashMap<String,String>();
 		
-		String lastInsertedKey= sql.selectOne("brand.lastInsertedKey",
+		paramiterMap.put("colName",colName);
+		paramiterMap.put("tableName",tableNmae);
+		
+		String lastInsertedKey= sql.selectOne("Key.lastInsertedKey",
 				paramiterMap);
 		
 		
-		paramiterMap.put("colNmae",colName);
-		paramiterMap.put("tableNmae",tableNmae);
 		
 		//generazione della prima chiavi
 		if (StringUtils.isEmpty(lastInsertedKey)){

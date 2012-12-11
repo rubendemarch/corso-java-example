@@ -15,8 +15,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		</environment>
 	</environments>
 	<mappers>
+	<!-- Il namespace resta maiuscolo il nome del file no -->
 		<mapper resource="mybatis/mapper/language.xml" />
 		<mapper resource="mybatis/mapper/brand.xml" />
-		<mapper resource="mybatis/mapper/key.xml" />
+		<mapper resource="mybatis/mapper/Key.xml" />
+		<mapper resource="mybatis/mapper/common.xml" />
 	</mappers>
 </configuration>
