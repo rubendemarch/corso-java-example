@@ -13,6 +13,7 @@
 String msg = (String)request.getAttribute("msg");
 %>
 <body onload="msg('<%=msg%>')">
+<jsp:include page="../../common/menu/headerMenu.jsp"/>
 <form action="./ManageBrands" method="post">
 <input 
 type="hidden" 

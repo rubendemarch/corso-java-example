@@ -25,6 +25,7 @@ List<Locale>toManage=
 <title><%=rb.getString("manage.language.page.title")%></title>
 </head>
 <body>
+<jsp:include page="../../common/menu/headerMenu.jsp"/>
 <form action="./ManageLanguages" name="language" method="post">
 <input type="hidden" name="<%=Common.ACTION%>" value="save">
 <%
