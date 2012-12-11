@@ -41,23 +41,32 @@ public class ManageBrands extends RootServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		final String metodo="doGet";
+		log.start(metodo);
+		process(request, response);
+		log.end(metodo);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		final String metodo="doPost";
+		log.start(metodo);
+		process(request, response);
+		log.end(metodo);
 	}
 	
 	protected void process(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		log=new MyLogger(this.getClass());
 		final String metodo="process";
 		log.start(metodo);
+		loadLanguage(request);
 		String action = request.getParameter(Common.ACTION);
 		if("Inserisci".equals(action)){
 			ResourceBundle rb = (ResourceBundle)request.getAttribute(Request.ResourceBundle);

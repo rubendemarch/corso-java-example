@@ -12,7 +12,7 @@
   <servlet>
   	<!-- Il nome della servlet deve coincidere con il servlet mapping -->
     <servlet-name>ManageBrands</servlet-name>
-    <servlet-class>it.eCommerce.servlet.common.brands</servlet-class>
+    <servlet-class>it.eCommerce.servlet.common.brands.ManageBrands</servlet-class>
   </servlet>
   <!-- END dichiarazioni servlet -->
   
