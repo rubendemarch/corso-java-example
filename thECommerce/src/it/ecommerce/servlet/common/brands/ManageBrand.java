@@ -70,12 +70,32 @@ public class ManageBrand extends RootServlet {
 		if("inserisci".equals(action)){
 			ResourceBundle rb = (ResourceBundle)request
 												.getAttribute(Request.ResourceBundle);
-			request
-				.setAttribute(
-					"msg",
-					(insertNewBrand(request))?
-						rb.getString("salvataggio.ok"):
-						rb.getString("salvataggio.ko"));
+			HashMap<String, Object>brand=new HashMap<String, Object>();
+			brand.put("colName","NAME");
+			brand.put("tableName","BRANDS");
+			brand.put("colValue", request.getParameter("name"));
+			SqlSession sql=sqlSessionFactory.openSession();
+			int count=0;
+			try {
+				count = sql.selectOne("Common.count", brand);
+			} catch (Exception e) {
+				log.error(metodo, request.getSession().getId(), e);
+			}finally{
+				sql.close();
+			}
+			if(count>0){
+				request
+					.setAttribute(
+						"msg",
+						rb.getString("salvataggio.alreadyInsered"));
+			}else{
+				request
+					.setAttribute(
+						"msg",
+						(insertNewBrand(request))?
+							rb.getString("salvataggio.ok"):
+							rb.getString("salvataggio.ko"));
+			}
 		}
 		request
 		.getRequestDispatcher("jsp/manage/brands/insertBrand.jsp")
