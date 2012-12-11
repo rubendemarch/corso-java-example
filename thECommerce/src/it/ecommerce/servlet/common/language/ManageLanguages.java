@@ -76,7 +76,7 @@ public class ManageLanguages extends RootServlet {
 		List<HashMap<String, Object>> managedLanguages = 
 			(List<HashMap<String, Object>>)
 				(List<?>)
-					sql.selectList("language.list");
+					sql.selectList("Language.list");
 		sql.close();
 		request.setAttribute(Request.MANAGED_LANGUAGES, managedLanguages);
 		request.getSession().setAttribute(Request.MANAGED_LANGUAGES, managedLanguages);
@@ -114,7 +114,7 @@ public class ManageLanguages extends RootServlet {
 				HashMap<String, Object> toManage = new HashMap<String, Object>();
 				toManage.put("ID_LANGUAGE", id_language);
 				toManage.put("IS_VISIBLE", true);
-				sql.insert("language.add", toManage);
+				sql.insert("Language.add", toManage);
 			}
 			// 2 aggiorna lo stato di visibilità delle lingue gestite
 			List<HashMap<String, Object>> managedLanguages=
@@ -127,13 +127,13 @@ public class ManageLanguages extends RootServlet {
 					if(((BigDecimal)//devo fare update solo se la lingua era invisibile
 							managedLanguage.get("IS_VISIBLE")).intValue()==0){
 						managedLanguage.put("IS_VISIBLE",true);
-						sql.update("language.update", managedLanguage);
+						sql.update("Language.update", managedLanguage);
 					}
 				}else{//nella pagina la checkbox associata non è fleggata 
 					if(((BigDecimal)//devo fare update solo se la lingua era visibile
 							managedLanguage.get("IS_VISIBLE")).intValue()==1){
 						managedLanguage.put("IS_VISIBLE",false);
-						sql.update("language.update", managedLanguage);
+						sql.update("Language.update", managedLanguage);
 					}
 				}
 			}

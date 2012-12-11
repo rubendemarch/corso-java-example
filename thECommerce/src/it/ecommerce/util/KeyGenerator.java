@@ -24,7 +24,7 @@ public class KeyGenerator {
 		HashMap<String,String>parameterMap= new HashMap<String, String>();
 		parameterMap.put("colName", colName);
 		parameterMap.put("tableName", tableName);
-		String lastInsertedKey = sql.selectOne("key.lastInsertedKey",
+		String lastInsertedKey = sql.selectOne("Key.lastInsertedKey",
 																	parameterMap);
 		if(StringUtils.isEmpty(lastInsertedKey)){
 			return StringUtils.rightPad(prefix, keyMaxLength,padChar);

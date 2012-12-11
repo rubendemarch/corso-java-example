@@ -98,7 +98,7 @@ public class ManageBrand extends RootServlet {
 			brand.put("LOGO_URL", null);//TODO
 			brand.put("NAME", request.getParameter("name"));
 			brand.put("IS_DELETED", false);
-			rowsAffected=sql.insert("brand.add", brand);
+			rowsAffected=sql.insert("Brand.add", brand);
 			sql.commit();
 		}catch(Exception e){
 			log.error(metodo, request.getSession().getId(), e);
