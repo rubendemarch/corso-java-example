@@ -2,27 +2,16 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="brand">
-	<select id="list" resultType="HashMap">
-		SELECT * FROM brands
-	</select>
-	<insert id="add" parameterType="HashMap">
-		INSERT INTO brands(ID_BRAND,IS_VISIBLE,	URL,LOGO_URL,NAME,IS_DELETED)
-		VALUES(#{ID_BRAND},#{IS_VISIBLE}, #{URL}, #{LOGO_URL}, #{NAME}, #{IS_DELETED})
-	</insert>
-	<update id="update">
-		UPDATE brands SET IS_VISIBLE=#{IS_VISIBLE},
-		IS_DELETED = #{IS_DELETED},
-		URL= #{URL},
-		LOGO_URL=#{LOGO_URL},
-		NAME=#{NAME}
-		WHERE ID_BRAND=#{ID_BRAND}
-	</update>
+<mapper namespace="key">
 	
 	<!-- Restiuisce la stringa con la chiava + grande inserita,
 	dopo averla incrementata aggiornerò l'ID_BRAND -->
 	
-	<select id="lastInsertedKey" resultType="String">
-		SELECT MAX(ID_BRAND) FROM (brands)  
+	<select
+			id="lastInsertedKey"
+			resultType="String"
+			parameterType="HashMap">
+		SELECT MAX(${colName}) FROM ${tableName}
 	</select>
 </mapper>
+
