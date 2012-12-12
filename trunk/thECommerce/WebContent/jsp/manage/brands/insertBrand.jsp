@@ -9,6 +9,7 @@
 <title><%=rb.getString("manage.brand.page.title")%></title>
 <script type="text/javascript" src="js/common/message.js"></script>
 <script type="text/javascript" src="js/common/radio.js"></script>
+<script type="text/javascript" src="js/common/button.js"></script>
 </head>
 <%
 String msg = (String)request.getAttribute("msg");
@@ -20,6 +21,7 @@ String msg = (String)request.getAttribute("msg");
 type="hidden" 
 name="<%=Common.ACTION%>" 
 value="inserisci">
+<input type="hidden" name="ext" value="" id="ext">
 <label><%=rb.getString("manage.brand.page.labelNome")%></label>
 <input type="text" value="" name="name" maxlength="100" size="20">
 <br>
@@ -42,7 +44,10 @@ value="inserisci">
 	value="image">
 <input type="file" name="logoImg" id="logoImg" accept="image/*" disabled="disabled">
 <br>
-<input type="submit" value="<%=rb.getString("common.save")%><%=rb.getString("manage.brand.page.save")%>"> 
+<input
+type="submit"
+value="<%=rb.getString("common.save")%><%=rb.getString("manage.brand.page.save")%>"
+onmouseup="copyValue('logoImg','ext')"> 
 </form>
 </body>
 </html>

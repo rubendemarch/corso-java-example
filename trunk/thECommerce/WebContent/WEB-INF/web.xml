@@ -43,4 +43,8 @@
 		<param-name>managedLanguages</param-name>
 		<param-value>it fr en</param-value>
 	</context-param>
+	<context-param>
+		<param-name>urlSite</param-name>
+		<param-value>http://dr-pc:8050</param-value>
+	</context-param>
 </web-app>
