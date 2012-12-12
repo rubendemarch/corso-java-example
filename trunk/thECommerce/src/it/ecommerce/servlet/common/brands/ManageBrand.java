@@ -26,7 +26,7 @@ import org.apache.ibatis.session.TransactionIsolationLevel;
 public class ManageBrand extends RootServlet {
 	private static final long serialVersionUID = 1L;
 	private MyLogger log;
-
+	private String imagePath="images\\brand\\";
 	/**
 	 * @see RootServlet#RootServlet()
 	 */
@@ -87,15 +87,15 @@ public class ManageBrand extends RootServlet {
 						"msg",
 						rb.getString("salvataggio.alreadyInsered"));
 			}else{
-				String url=request.getParameter("url");
+				String url=request.getParameter("logoUrl");
 				if("image".equals(request.getParameter("radioLogoUrl"))){
 					Part filePart = request.getPart("logoImg");
 					if(filePart!=null){
 						String ext = request.getParameter("ext");
-						ext=ext.substring(ext.lastIndexOf('.')-1);
+						ext=ext.substring(ext.lastIndexOf('.'));
 						String fileNameGen=FileNameGenerator.fileNameGen(ext);
-						filePart.write(realPath+"image\\brand\\"+fileNameGen);
-						url = siteUrl +contextPath +"image\\brand\\"+fileNameGen;
+						filePart.write(realPath + imagePath + fileNameGen);
+						url = siteUrl +contextPath + imagePath + fileNameGen;
 					}
 				}
 				request
