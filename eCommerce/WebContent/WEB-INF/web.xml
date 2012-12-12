@@ -35,6 +35,10 @@
     <url-pattern>/ManageBrands</url-pattern>
   </servlet-mapping>
   <!-- END dichiarazioni servlet-mapping -->
+    <context-param>
+    <param-name>urlSite</param-name>
+    <param-value>http://Alfa-305-PC:8050</param-value>
+  </context-param>
   <context-param>
     <param-name>managedLanguages</param-name>
     <param-value>it fr en</param-value>

@@ -9,7 +9,10 @@ locale -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title><%=rb.getString("manage.brand.page.title")%></title>
+
 <script type="text/javascript" src="js/common/message.js"></script>
+<script type="text/javascript" src="js/common/radio.js"></script>
+<script type="text/javascript" src="js/common/button.js"></script>
 </head>
 <%
 String msg = (String)request.getAttribute("msg");
@@ -21,6 +24,11 @@ dal metodo process -->
 <form action="./ManageBrands" method="post" enctype="multipart/form-data">
 
 <input type="hidden" name="<%=Common.ACTION%>" value="Inserisci">
+
+
+<!-- ricavo l'estensione del file inserito prima di fare submit -->
+<input type="hidden" name="ext" value="">
+
 
 <!-- Nel file baseLabel.properties ci sono i nomi delle label -->
 
@@ -46,14 +54,19 @@ dal metodo process -->
 	name="radioLogoUrl"
 	onchange="manageRadio('logoImg','logoUrl')"
 	value="image">
-<input type="file" name="logoImg" id="logoImg" accept="image/*" disabled="disabled">
+<input 
+	type="file" 
+	name="logoImg" 
+	id="logoImg" 
+	accept="image/*" 
+	disabled="disabled">
 <br>
 
-<input type="submit" value="<%=rb.getString("common.save")%><%=rb.getString("manage.brand.page.save")%>">
+<input
+type="submit"
+	value="<%=rb.getString("common.save")%><%=rb.getString("manage.brand.page.save")%>"
+	onmouseup="copyValue('logoImg','ext')"> 
 
- 
- 
- 
 </form>
 </body>
 </html>
