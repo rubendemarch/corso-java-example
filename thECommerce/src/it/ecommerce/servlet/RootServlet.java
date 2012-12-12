@@ -16,6 +16,8 @@ import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
 import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,6 +34,10 @@ public class RootServlet extends HttpServlet {
 	private MyLogger log;
 
 	protected SqlSessionFactory sqlSessionFactory=null;
+
+	protected String siteUrl;
+	protected String realPath;
+	protected String contextPath;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -56,6 +62,22 @@ public class RootServlet extends HttpServlet {
 		}
 		log.end(metodo);
 	}
+
+	
+	/* (non-Javadoc)
+	 * @see javax.servlet.GenericServlet#init(javax.servlet.ServletConfig)
+	 */
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		final String metodo="init";
+		log.start(metodo);
+		super.init(config);
+		siteUrl=(String) getServletContext().getInitParameter("siteUrl");
+		realPath=getServletContext().getRealPath("/");
+		contextPath=getServletContext().getContextPath();
+		log.end(metodo);
+	}
+
 
 	/**
 	 * @see Servlet#destroy()

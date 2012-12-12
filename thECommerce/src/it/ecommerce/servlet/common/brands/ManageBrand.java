@@ -1,13 +1,13 @@
 package it.ecommerce.servlet.common.brands;
 
 import it.ecommerce.servlet.RootServlet;
+import it.ecommerce.util.FileNameGenerator;
 import it.ecommerce.util.KeyGenerator;
 import it.ecommerce.util.constants.Common;
 import it.ecommerce.util.constants.Request;
 import it.ecommerce.util.log.MyLogger;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -87,16 +87,21 @@ public class ManageBrand extends RootServlet {
 						"msg",
 						rb.getString("salvataggio.alreadyInsered"));
 			}else{
+				String url=request.getParameter("url");
 				if("image".equals(request.getParameter("radioLogoUrl"))){
 					Part filePart = request.getPart("logoImg");
-					String realPath=request.getServletContext().getRealPath("/");
-					filePart.write(realPath+"image\\brand\\primaprova.pdf");
-					//creare url nella parameter
+					if(filePart!=null){
+						String ext = request.getParameter("ext");
+						ext=ext.substring(ext.lastIndexOf('.')-1);
+						String fileNameGen=FileNameGenerator.fileNameGen(ext);
+						filePart.write(realPath+"image\\brand\\"+fileNameGen);
+						url = siteUrl +contextPath +"image\\brand\\"+fileNameGen;
+					}
 				}
 				request
 					.setAttribute(
 						"msg",
-						(insertNewBrand(request))?
+						(insertNewBrand(request,url))?
 							rb.getString("salvataggio.ok"):
 							rb.getString("salvataggio.ko"));
 			}
@@ -107,7 +112,9 @@ public class ManageBrand extends RootServlet {
 		log.end(metodo);
 	}
 
-	private synchronized boolean insertNewBrand(HttpServletRequest request){
+	private synchronized boolean insertNewBrand(
+			HttpServletRequest request,
+			String url){
 		final String metodo="insertNewBrand";
 		log.start(metodo);
 		SqlSession sql = sqlSessionFactory
@@ -118,7 +125,7 @@ public class ManageBrand extends RootServlet {
 			HashMap<String, Object>brand=new HashMap<String, Object>();
 			brand.put("ID_BRAND", KeyGenerator.keyGen(sql, "ID_BRAND", "brands", "B"));
 			brand.put("IS_VISIBLE", true);
-			brand.put("URL", request.getParameter("url"));
+			brand.put("URL", url);
 			brand.put("LOGO_URL", request.getParameter("logoUrl"));
 			brand.put("NAME", request.getParameter("name"));
 			brand.put("IS_DELETED", false);
