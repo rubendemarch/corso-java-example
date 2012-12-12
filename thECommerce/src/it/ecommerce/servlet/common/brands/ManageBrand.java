@@ -88,10 +88,9 @@ public class ManageBrand extends RootServlet {
 						rb.getString("salvataggio.alreadyInsered"));
 			}else{
 				if("image".equals(request.getParameter("radioLogoUrl"))){
-					//upload image
 					Part filePart = request.getPart("logoImg");
-					//InputStream fileInputStream = filePart.getInputStream();
-					filePart.write("c:/log/primaprova.pdf");
+					String realPath=request.getServletContext().getRealPath("/");
+					filePart.write(realPath+"image\\brand\\primaprova.pdf");
 					//creare url nella parameter
 				}
 				request
