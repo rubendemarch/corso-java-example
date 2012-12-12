@@ -107,9 +107,22 @@ public class ManageBrand extends RootServlet {
 							rb.getString("salvataggio.ko"));
 			}
 		}
-		request
-		.getRequestDispatcher("jsp/manage/brands/insertBrand.jsp")
-			.forward(request, response);
+		if("LIST".equals(action)){
+			
+			SqlSession sql= sqlSessionFactory.openSession();
+			request.setAttribute(
+					"brandList",
+					sql.selectList("Brand.list"));
+			sql.close();
+			request
+			.getRequestDispatcher("jsp/manage/brands/brandList.jsp")
+				.forward(request, response);
+		}
+		if(!"LIST".equals(action)){
+			request
+				.getRequestDispatcher("jsp/manage/brands/insertBrand.jsp")
+					.forward(request, response);
+		}
 		log.end(metodo);
 	}
 
