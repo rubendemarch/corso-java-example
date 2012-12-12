@@ -35,7 +35,7 @@ public class RootServlet extends HttpServlet {
 
 	protected SqlSessionFactory sqlSessionFactory=null;
 
-	protected String siteUrl;
+	protected String urlSite;
 	protected String realPath;
 	protected String contextPath;
 
@@ -72,7 +72,7 @@ public class RootServlet extends HttpServlet {
 		final String metodo="init";
 		log.start(metodo);
 		super.init(config);
-		siteUrl=(String) getServletContext().getInitParameter("siteUrl");
+		urlSite=(String) getServletContext().getInitParameter("urlSite");
 		realPath=getServletContext().getRealPath("/");
 		contextPath=getServletContext().getContextPath();
 		log.end(metodo);
