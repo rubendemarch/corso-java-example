@@ -7,20 +7,21 @@ import it.ecommerce.util.constants.Request;
 import it.ecommerce.util.log.MyLogger;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.TransactionIsolationLevel;
+import org.apache.tomcat.util.http.fileupload.FileItem;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 /**
  * Servlet implementation class ManageBrand
@@ -65,8 +66,20 @@ public class ManageBrand extends RootServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		final String metodo="process";
 		log.start(metodo);
+		List<FileItem>items;
 		loadLanguage(request);
 		String action = request.getParameter(Common.ACTION);
+//		if(ServletFileUpload.isMultipartContent(request)){
+//			ServletFileUpload upload = new ServletFileUpload(
+//																new DiskFileItemFactory());
+//			try {
+//				items=upload.parseRequest(request);
+//			} catch (FileUploadException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//		}
+		
 		if("inserisci".equals(action)){
 			ResourceBundle rb = (ResourceBundle)request
 												.getAttribute(Request.ResourceBundle);
@@ -114,8 +127,8 @@ public class ManageBrand extends RootServlet {
 			HashMap<String, Object>brand=new HashMap<String, Object>();
 			brand.put("ID_BRAND", KeyGenerator.keyGen(sql, "ID_BRAND", "brands", "B"));
 			brand.put("IS_VISIBLE", true);
-			brand.put("URL", null);//TODO
-			brand.put("LOGO_URL", null);//TODO
+			brand.put("URL", request.getParameter("url"));
+			brand.put("LOGO_URL", request.getParameter("logoUrl"));
 			brand.put("NAME", request.getParameter("name"));
 			brand.put("IS_DELETED", false);
 			rowsAffected=sql.insert("Brand.add", brand);
