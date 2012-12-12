@@ -16,6 +16,8 @@ import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
 import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,6 +36,10 @@ public class RootServlet extends HttpServlet {
 	private MyLogger log;
 
 	protected SqlSessionFactory sqlSessionFactory=null;
+	
+	protected String siteUrl;
+	protected String realPath;
+	protected String contextPath;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -59,6 +65,19 @@ public class RootServlet extends HttpServlet {
 			log.fatal(metodo, "fallita SqlSessionFactoryBuilder", e);
 		}
 		log.end(metodo);
+	}
+	
+	public void init(ServletConfig config) throws ServletException{
+		final String metodo = "init";
+		log.start(metodo);
+		
+		super.init(config);
+		siteUrl = (String) getServletContext().getInitParameter("managedLanguages");
+		realPath = getServletContext().getRealPath("/");
+		contextPath = getServletContext().getContextPath();
+		log.end(metodo);
+		
+		return;
 	}
 
 	/**

@@ -1,6 +1,7 @@
 package it.eCommerce.servlet.common.brands;
 
 import it.eCommerce.log.MyLogger;
+import it.eCommerce.util.FileNameGenerator;
 import it.eCommerce.util.KeyGenerator;
 import it.eCommerce.util.constants.Common;
 import it.eCommerce.util.constants.Request;
@@ -10,11 +11,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import javax.imageio.spi.ImageWriterSpi;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.TransactionIsolationLevel;
@@ -27,6 +30,7 @@ import org.apache.ibatis.session.TransactionIsolationLevel;
 public class ManageBrands extends RootServlet {
 	private static final long serialVersionUID = 1L;
 	private MyLogger log;
+	private String imagePath="image\\brand\\";
 
 	/**
 	 * @see RootServlet#RootServlet()
@@ -69,21 +73,65 @@ public class ManageBrands extends RootServlet {
 		String action = request.getParameter(Common.ACTION);
 		
 		
-		
-		
-		if ("Inserisci".equals(action)) {
-			ResourceBundle rb = (ResourceBundle) request
-					.getAttribute(Request.ResourceBundle);
-			request.setAttribute("msg", insertNewBrand(request) ?
-			// Carica il msg opportuno
-			rb.getString("salvataggio.ok")
-					: rb.getString("salvataggio.ko"));
+		if("inserisci".equals(action)){
+			ResourceBundle rb = (ResourceBundle)request
+												.getAttribute(Request.ResourceBundle);
+			HashMap<String, Object>brand=new HashMap<String, Object>();
+			brand.put("colName","NAME");
+			brand.put("tableName","BRANDS");
+			brand.put("colValue", request.getParameter("name"));
+			SqlSession sql=sqlSessionFactory.openSession();
+			int count=0;
+			try {
+				count = sql.selectOne("Common.count", brand);
+			} catch (Exception e) {
+				log.error(metodo, request.getSession().getId(), e);
+			}finally{
+				sql.close();
+			}
+			if(count>0){
+				request
+					.setAttribute(
+						"msg",
+						rb.getString("salvataggio.alreadyInserted"));
+			}else{
+				//se il file esiste già
+				
+				String url = request.getParameter("url");
+				if("image".equals(request.getParameter("radioLogoUrl"))){
+					//upload immagine
+					Part filePart = request.getPart("logoImg");
+					
+					if (filePart!=null){
+						
+						filePart.getContentType();
+						filePart.getName();
+						
+						//scrivo il file speficificando il percorso dv scrivere il file
+						
+						String ext = request.getParameter("ext");
+						//estraggo l'estensione a partire dal punto in poi
+						ext=ext.substring(ext.lastIndexOf('.')-1);
+						String fileNameGen = FileNameGenerator.fileGen("");
+						filePart.write(realPath+imagePath+fileNameGen);
+						
+						//creo la url nella paramiter e la salvo 
+						url = siteUrl+contextPath+imagePath+fileNameGen; 
+					}
+					
+				}
+				request
+					.setAttribute(
+						"msg",
+						(insertNewBrand(request))?
+							rb.getString("salvataggio.ok"):
+							rb.getString("salvataggio.ko"));
+			}
 		}
-		request.getRequestDispatcher("jsp/manage/brands/insertBrand.jsp")
-				.forward(request, response);
-
+		request
+		.getRequestDispatcher("jsp/manage/brands/insertBrand.jsp")
+			.forward(request, response);
 		log.end(metodo);
-
 	}
 
 	/*
@@ -92,7 +140,7 @@ public class ManageBrands extends RootServlet {
 	 * nuovi brand
 	 */
 	private synchronized boolean insertNewBrand(HttpServletRequest request) {
-
+		String url;
 		final String metodo = "insertNewBrand";
 		log.start(metodo);
 
