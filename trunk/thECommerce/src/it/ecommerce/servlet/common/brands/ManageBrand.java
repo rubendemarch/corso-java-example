@@ -7,21 +7,18 @@ import it.ecommerce.util.constants.Request;
 import it.ecommerce.util.log.MyLogger;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.TransactionIsolationLevel;
-import org.apache.tomcat.util.http.fileupload.FileItem;
-import org.apache.tomcat.util.http.fileupload.FileUploadException;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 /**
  * Servlet implementation class ManageBrand
@@ -66,20 +63,8 @@ public class ManageBrand extends RootServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		final String metodo="process";
 		log.start(metodo);
-		List<FileItem>items;
 		loadLanguage(request);
 		String action = request.getParameter(Common.ACTION);
-//		if(ServletFileUpload.isMultipartContent(request)){
-//			ServletFileUpload upload = new ServletFileUpload(
-//																new DiskFileItemFactory());
-//			try {
-//				items=upload.parseRequest(request);
-//			} catch (FileUploadException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-//		}
-		
 		if("inserisci".equals(action)){
 			ResourceBundle rb = (ResourceBundle)request
 												.getAttribute(Request.ResourceBundle);
@@ -102,6 +87,13 @@ public class ManageBrand extends RootServlet {
 						"msg",
 						rb.getString("salvataggio.alreadyInsered"));
 			}else{
+				if("image".equals(request.getParameter("radioLogoUrl"))){
+					//upload image
+					Part filePart = request.getPart("logoImg");
+					//InputStream fileInputStream = filePart.getInputStream();
+					filePart.write("c:/log/primaprova.pdf");
+					//creare url nella parameter
+				}
 				request
 					.setAttribute(
 						"msg",
