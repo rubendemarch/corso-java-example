@@ -18,22 +18,41 @@ String msg = (String)request.getAttribute("msg");
 dal metodo process -->
 <body onload="msg('<%=msg%>')">
 <jsp:include page="../../common/menu/headerMenu.jsp"></jsp:include>
-<form action="./ManageBrands" method="post">
+<form action="./ManageBrands" method="post" enctype="multipart/form-data">
+
 <input type="hidden" name="<%=Common.ACTION%>" value="Inserisci">
 
 <!-- Nel file baseLabel.properties ci sono i nomi delle label -->
 
 <label><%=rb.getString("manage.brand.page.labelNome")%></label>
-<input type="text" value="" name="name" maxlength="100" size="50">
+<input type="text" value="" name="name" maxlength="100" size="20">
 <br>
+
 <label><%=rb.getString("manage.brand.page.labelUrl")%></label>
-<input type="text" value="" name="url" maxlength="150" size="60">
+<input type="text" value="" name="url" maxlength="150" size="30">
 <br>
 <label><%=rb.getString("manage.brand.page.labelLogo_url")%></label>
-<input type="text" value="" name="logo_url" maxlength="150" size="60">
+<input type="text" value="" name="logo_url" maxlength="150" size="30" id="logoUrl">
 <br>
-<input type="submit" value="<%=rb.getString("common.save")%><%=rb.getString("manage.brand.page.save")%>" align="middle">
+<input
+	type="radio"
+	name="radioLogoUrl"
+	checked="checked"
+	onchange="manageRadio('logoUrl','logoImg')"
+	value="url">
 
+<input
+	type="radio"
+	name="radioLogoUrl"
+	onchange="manageRadio('logoImg','logoUrl')"
+	value="image">
+<input type="file" name="logoImg" id="logoImg" accept="image/*" disabled="disabled">
+<br>
+
+<input type="submit" value="<%=rb.getString("common.save")%><%=rb.getString("manage.brand.page.save")%>">
+
+ 
+ 
  
 </form>
 </body>

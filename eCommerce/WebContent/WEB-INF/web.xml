@@ -13,6 +13,14 @@
   	<!-- Il nome della servlet deve coincidere con il servlet mapping -->
     <servlet-name>ManageBrands</servlet-name>
     <servlet-class>it.eCommerce.servlet.common.brands.ManageBrands</servlet-class>
+    <multipart-config>
+    	<!-- imposto la soglia max del file a 1MB  -->
+    	<max-file-size>1048576</max-file-size>
+    	<max-request-size>1058576</max-request-size>
+    	<!-- Dopo quale limite inizio a scrivere il file sul disco,
+    	altrimenti scarica il file automaticamente-->
+    	<file-size-threshold>524288</file-size-threshold>
+    </multipart-config>
   </servlet>
   <!-- END dichiarazioni servlet -->
   

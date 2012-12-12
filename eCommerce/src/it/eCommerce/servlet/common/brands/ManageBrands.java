@@ -22,6 +22,7 @@ import org.apache.ibatis.session.TransactionIsolationLevel;
 /**
  * Servlet implementation class ManageBrand
  */
+
 @WebServlet("/ManageBrand")
 public class ManageBrands extends RootServlet {
 	private static final long serialVersionUID = 1L;
@@ -66,6 +67,10 @@ public class ManageBrands extends RootServlet {
 		log.start(metodo);
 		loadLanguage(request);
 		String action = request.getParameter(Common.ACTION);
+		
+		
+		
+		
 		if ("Inserisci".equals(action)) {
 			ResourceBundle rb = (ResourceBundle) request
 					.getAttribute(Request.ResourceBundle);
