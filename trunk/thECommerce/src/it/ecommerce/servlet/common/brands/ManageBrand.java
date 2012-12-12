@@ -27,6 +27,7 @@ public class ManageBrand extends RootServlet {
 	private static final long serialVersionUID = 1L;
 	private MyLogger log;
 	private String imagePath="images\\brand\\";
+	private String imageUrl="images/brand/";
 	/**
 	 * @see RootServlet#RootServlet()
 	 */
@@ -87,7 +88,7 @@ public class ManageBrand extends RootServlet {
 						"msg",
 						rb.getString("salvataggio.alreadyInsered"));
 			}else{
-				String url=request.getParameter("logoUrl");
+				String logoUrl=request.getParameter("logoUrl");
 				if("image".equals(request.getParameter("radioLogoUrl"))){
 					Part filePart = request.getPart("logoImg");
 					if(filePart!=null){
@@ -95,13 +96,13 @@ public class ManageBrand extends RootServlet {
 						ext=ext.substring(ext.lastIndexOf('.'));
 						String fileNameGen=FileNameGenerator.fileNameGen(ext);
 						filePart.write(realPath + imagePath + fileNameGen);
-						url = siteUrl +contextPath + imagePath + fileNameGen;
+						logoUrl = urlSite +contextPath + imageUrl + fileNameGen;
 					}
 				}
 				request
 					.setAttribute(
 						"msg",
-						(insertNewBrand(request,url))?
+						(insertNewBrand(request,logoUrl))?
 							rb.getString("salvataggio.ok"):
 							rb.getString("salvataggio.ko"));
 			}
@@ -114,7 +115,7 @@ public class ManageBrand extends RootServlet {
 
 	private synchronized boolean insertNewBrand(
 			HttpServletRequest request,
-			String url){
+			String logoUrl){
 		final String metodo="insertNewBrand";
 		log.start(metodo);
 		SqlSession sql = sqlSessionFactory
@@ -125,8 +126,8 @@ public class ManageBrand extends RootServlet {
 			HashMap<String, Object>brand=new HashMap<String, Object>();
 			brand.put("ID_BRAND", KeyGenerator.keyGen(sql, "ID_BRAND", "brands", "B"));
 			brand.put("IS_VISIBLE", true);
-			brand.put("URL", url);
-			brand.put("LOGO_URL", request.getParameter("logoUrl"));
+			brand.put("URL", request.getParameter("url"));
+			brand.put("LOGO_URL", logoUrl);
 			brand.put("NAME", request.getParameter("name"));
 			brand.put("IS_DELETED", false);
 			rowsAffected=sql.insert("Brand.add", brand);
