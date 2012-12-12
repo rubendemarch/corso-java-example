@@ -26,16 +26,22 @@ value="inserisci">
 <label><%=rb.getString("manage.brand.page.labelUrl")%></label>
 <input type="text" value="" name="url" maxlength="150" size="30">
 <br>
-<input type="radio" name="radioLogoUrl" checked="checked" onchange="manageRadio('logoUrl','logoImg')">
+<input
+	type="radio"
+	name="radioLogoUrl"
+	checked="checked"
+	onchange="manageRadio('logoUrl','logoImg')"
+	value="url">
 <label><%=rb.getString("manage.brand.page.labelLogoUrl")%></label>
 <input type="text" value="" name="logoUrl" maxlength="150" size="30" id="logoUrl">
 <br>
-<input type="radio" name="radioLogoUrl" onchange="manageRadio('logoImg','logoUrl')">
+<input
+	type="radio"
+	name="radioLogoUrl"
+	onchange="manageRadio('logoImg','logoUrl')"
+	value="image">
 <input type="file" name="logoImg" id="logoImg" accept="image/*" disabled="disabled">
 <br>
-
-
-
 <input type="submit" value="<%=rb.getString("common.save")%><%=rb.getString("manage.brand.page.save")%>"> 
 </form>
 </body>
