@@ -63,7 +63,7 @@ public class ManageLanguages extends RootServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		final String metodo="process";
 		log.start(metodo);
-		loadLanguage(request);
+		initProcess(request);
 		String action = request.getParameter(Common.ACTION);
 		if (!StringUtils.isEmpty(action)) {
 			updateLanguages(request, response);
@@ -98,8 +98,7 @@ public class ManageLanguages extends RootServlet {
 		}
 		request.setAttribute(Request.TO_MANAGE_LANGUAGES, toManage);
 
-		request.getRequestDispatcher("jsp/manage/language/language.jsp")
-				.forward(request, response);
+		dispatch(request, response);
 		log.end(metodo);
 	}
 

@@ -64,7 +64,7 @@ public class ManageBrand extends RootServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		final String metodo="process";
 		log.start(metodo);
-		loadLanguage(request);
+		initProcess(request);
 		String action = request.getParameter(Common.ACTION);
 		request.setAttribute(Common.ACTION, action);
 		if(Common.SAVE.equals(request.getParameter(Common.SUB_ACTION))){
@@ -115,9 +115,7 @@ public class ManageBrand extends RootServlet {
 				sql.selectList("Brand.list"));
 			sql.close();
 		}
-		request
-			.getRequestDispatcher("jsp/manage/brands/brand.jsp")
-				.forward(request, response);
+		dispatch(request, response);
 		log.end(metodo);
 	}
 

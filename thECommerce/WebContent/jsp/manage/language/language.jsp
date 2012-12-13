@@ -23,6 +23,7 @@ List<Locale>toManage=
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title><%=rb.getString("manage.language.page.title")%></title>
+<script type="text/javascript" src="js/common/form.js"></script>
 </head>
 <body>
 <jsp:include page="../../common/menu/headerMenu.jsp"/>
