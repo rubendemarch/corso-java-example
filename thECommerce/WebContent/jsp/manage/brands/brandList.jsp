@@ -1,5 +1,6 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.HashMap"%>
+<%@include file="../../common/props.jsp"%>
 <%
 List<HashMap<String,Object>>brandList=
 (List<HashMap<String,Object>>)

@@ -1,4 +1,5 @@
 <%@page import="it.ecommerce.util.constants.Common"%>
+<%@include file="../../common/props.jsp"%>
 <form action="./ManageBrands" method="post" enctype="multipart/form-data">
 <input 
 type="hidden" 
