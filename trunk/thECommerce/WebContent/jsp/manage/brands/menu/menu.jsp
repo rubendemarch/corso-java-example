@@ -1,14 +1,15 @@
 <%@page import="it.ecommerce.util.constants.Common"%>
+<%@include file="../../../common/props.jsp"%>
 <table>
 	<tr>
 		<th>
 		<button onclick="dispatchPage('subMenu','./ManageBrands','<%=Common.ACTION%>','<%=Common.ADD%>')">
-		Inserisci Marca
+		<%=rb.getString("submenu.brand.insert")%>
 		</button>
 		</th>
 		<th>
 		<button onclick="dispatchPage('subMenu','./ManageBrands','<%=Common.ACTION%>','<%=Common.LIST%>')">
-		Lista marche
+		<%=rb.getString("submenu.brand.list")%>
 		</button>
 		</th>
 	</tr>

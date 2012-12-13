@@ -1,14 +1,15 @@
 <%@page import="it.ecommerce.util.constants.Common"%>
+<%@include file="../props.jsp"%>
 <table>
 <tr>
 <th>
 <button onclick="dispatchPage('menu','./ManageLanguages','<%=Common.ACTION%>','')">
-Lingue
+<%=rb.getString("menu.language")%>
 </button>
 </th>
 <th>
 <button onclick="dispatchPage('menu','./ManageBrands','<%=Common.ACTION%>','<%=Common.LIST%>')">
-Marche
+<%=rb.getString("menu.brand")%>
 </button>
 </th>
 </tr>
