@@ -27,7 +27,7 @@ public class ManageBrand extends RootServlet {
 	private static final long serialVersionUID = 1L;
 	private MyLogger log;
 	private String imagePath="images\\brand\\";
-	private String imageUrl="images/brand/";
+	private String imageUrl="/images/brand/";
 	/**
 	 * @see RootServlet#RootServlet()
 	 */
@@ -66,7 +66,8 @@ public class ManageBrand extends RootServlet {
 		log.start(metodo);
 		loadLanguage(request);
 		String action = request.getParameter(Common.ACTION);
-		if("inserisci".equals(action)){
+		request.setAttribute(Common.ACTION, action);
+		if(Common.SAVE.equals(request.getParameter(Common.SUB_ACTION))){
 			ResourceBundle rb = (ResourceBundle)request
 												.getAttribute(Request.ResourceBundle);
 			HashMap<String, Object>brand=new HashMap<String, Object>();
@@ -107,22 +108,16 @@ public class ManageBrand extends RootServlet {
 							rb.getString("salvataggio.ko"));
 			}
 		}
-		if("LIST".equals(action)){
-			
+		if(Common.LIST.equals(action)){
 			SqlSession sql= sqlSessionFactory.openSession();
 			request.setAttribute(
-					"brandList",
-					sql.selectList("Brand.list"));
+				"brandList",
+				sql.selectList("Brand.list"));
 			sql.close();
-			request
-			.getRequestDispatcher("jsp/manage/brands/brandList.jsp")
+		}
+		request
+			.getRequestDispatcher("jsp/manage/brands/brand.jsp")
 				.forward(request, response);
-		}
-		if(!"LIST".equals(action)){
-			request
-				.getRequestDispatcher("jsp/manage/brands/insertBrand.jsp")
-					.forward(request, response);
-		}
 		log.end(metodo);
 	}
 
