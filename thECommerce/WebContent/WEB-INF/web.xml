@@ -5,10 +5,14 @@
 	id="WebApp_ID" version="3.0">
 	<display-name>thECommerce</display-name>
 	<welcome-file-list>
-		<welcome-file>jsp/common/home.jsp</welcome-file>
+		<welcome-file>Home</welcome-file>
 	</welcome-file-list>
-
 	<!-- START Dichiarazioni di servlet -->
+	<servlet>
+		<servlet-name>Root</servlet-name>
+		<servlet-class>it.ecommerce.servlet.RootServlet</servlet-class>
+	</servlet>
+
 	<servlet>
 		<servlet-name>ManageLanguages</servlet-name>
 		<servlet-class>it.ecommerce.servlet.common.language.ManageLanguages</servlet-class>
@@ -27,6 +31,11 @@
 	<!-- END Dichiarazioni di servlet -->
 
 	<!-- START Dichiarazioni di servlet mapping -->
+	<servlet-mapping>
+		<servlet-name>Root</servlet-name>
+		<url-pattern>/Home</url-pattern>
+	</servlet-mapping>
+
 	<servlet-mapping>
 		<servlet-name>ManageLanguages</servlet-name>
 		<url-pattern>/ManageLanguages</url-pattern>

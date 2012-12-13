@@ -74,8 +74,11 @@ public class RootServlet extends HttpServlet {
 		log.start(metodo);
 		super.init(config);
 		urlSite=(String) getServletContext().getInitParameter("urlSite");
+		log.trace(metodo, urlSite);
 		realPath=getServletContext().getRealPath("/");
+		log.trace(metodo, realPath);
 		contextPath=getServletContext().getContextPath();
+		log.trace(metodo, contextPath);
 		log.end(metodo);
 	}
 
@@ -166,5 +169,31 @@ public class RootServlet extends HttpServlet {
 			.getRequestDispatcher("jsp/common/root.jsp")
 				.forward(request, response);
 	}
-	
+
+	/* (non-Javadoc)
+	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		process(req, resp);
+	}
+
+	/* (non-Javadoc)
+	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		process(req, resp);
+	}
+
+	protected void process(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		final String metodo="process";
+		log.start(metodo);
+		initProcess(request);
+		dispatch(request, response);
+		log.end(metodo);
+	}
 }
