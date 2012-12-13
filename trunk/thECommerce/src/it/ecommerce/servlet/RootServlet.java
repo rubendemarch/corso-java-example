@@ -20,6 +20,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -83,10 +84,10 @@ public class RootServlet extends HttpServlet {
 	 * @see Servlet#destroy()
 	 */
 	public void destroy() {
-		// TODO connessione <------ :-)
+		// TODO 
 	}
 
-	protected Locale getLocale(HttpServletRequest request){
+	private Locale getLocale(HttpServletRequest request){
 		final String metodo="getLocale";
 		log.start(metodo);
 		if(request.getSession().getAttribute(Session.LANG)==null){
@@ -116,28 +117,54 @@ public class RootServlet extends HttpServlet {
 		return (Locale)request.getSession().getAttribute(Session.LANG);
 	}
 
-	protected void loadLanguage(HttpServletRequest request){
+	private void loadLanguage(HttpServletRequest request){
 		Locale locale = getLocale(request);
+		String servletName = this.getClass().getName();
+		request.setAttribute(
+				Common.SERVLET_NAME,
+				servletName);
+
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(Common.RESOURCE, locale);
+		request.setAttribute(
+				Common.PAGE_TITLE,
+				resourceBundle.getString(
+					servletName));
+
 		request.setAttribute(
 			Request.ResourceBundle,
-			ResourceBundle.getBundle(Common.RESOURCE, locale));
+			resourceBundle);
+
 		request.setAttribute(
 			Request.LOCALE,
 			locale);
-		
+
 		String language =
 			(String) getServletContext().getInitParameter("managedLanguages");
-		
+
 		List<Locale>managedLanguages=new ArrayList<Locale>();
 		StringTokenizer tok =
 			new StringTokenizer(language, " ");
 		while(tok.hasMoreTokens()){
 			managedLanguages.add(new Locale(tok.nextToken()));
 		}
-		
+
 		request.setAttribute(
 				Request.managedLanguages,
 				managedLanguages);
 		
 	}
+
+	protected void initProcess(HttpServletRequest request){
+		loadLanguage(request);
+	}
+
+	protected void dispatch(
+			HttpServletRequest request,
+			HttpServletResponse response) throws	ServletException,
+																			IOException{
+		request
+			.getRequestDispatcher("jsp/common/root.jsp")
+				.forward(request, response);
+	}
+	
 }

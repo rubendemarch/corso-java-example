@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>home</title>
+<script type="text/javascript" src="js/common/form.js"></script>
 </head>
 <body>
 
