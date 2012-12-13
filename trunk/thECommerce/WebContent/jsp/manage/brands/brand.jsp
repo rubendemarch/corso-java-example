@@ -10,6 +10,7 @@
 <script type="text/javascript" src="js/common/message.js"></script>
 <script type="text/javascript" src="js/common/radio.js"></script>
 <script type="text/javascript" src="js/common/button.js"></script>
+<script type="text/javascript" src="js/common/form.js"></script>
 </head>
 <%
 String msg = (String)request.getAttribute("msg");

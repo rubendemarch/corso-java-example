@@ -8,4 +8,6 @@ public class Common {
 	public final static String ADD="ADD";
 	public final static String LIST="LIST";
 	public final static String SAVE="SAVE";
+
+	public final static String FORM_ID="FORM_ID";
 }
