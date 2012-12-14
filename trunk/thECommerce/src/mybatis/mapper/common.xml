@@ -10,4 +10,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(${colName}) FROM ${tableName}
 		WHERE ${colName}=#{colValue}
 	</select>
+	<select
+			id="detail"
+			resultType="HashMap"
+			parameterType="HashMap">
+		SELECT * FROM ${tableName}
+		WHERE ${colName}=#{colValue}
+	</select>
 </mapper>
