@@ -20,6 +20,7 @@ String msg = (String)request.getAttribute("msg");
 String servletName=(String)request.getAttribute(Common.SERVLET_NAME);
 %>
 <body onload="msg('<%=msg%>')">
+<jsp:include page="form/form.jsp"/>
 <jsp:include page="menu/headerMenu.jsp"/>
 <br>
 <%

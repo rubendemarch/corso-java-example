@@ -161,7 +161,7 @@ public class RootServlet extends HttpServlet {
 
 	protected void initProcess(HttpServletRequest request){
 		loadLanguage(request);
-		action = request.getParameter(Common.ACTION);
+		action = request.getParameter("commonAction");
 		request.setAttribute(Common.ACTION, action);
 	}
 
