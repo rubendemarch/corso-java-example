@@ -1,0 +1,11 @@
+@CHARSET "ISO-8859-1";
+td{
+	background: lime;
+	font-size: large;
+	text-align: right;
+}
+table.list{
+	border-color: lime;
+	border-style: groove;
+	border: 0,5;
+}
