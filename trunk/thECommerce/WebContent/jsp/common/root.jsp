@@ -13,6 +13,7 @@
 <script type="text/javascript" src="js/common/radio.js"></script>
 <script type="text/javascript" src="js/common/button.js"></script>
 <script type="text/javascript" src="js/common/form.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <%
 String msg = (String)request.getAttribute("msg");
