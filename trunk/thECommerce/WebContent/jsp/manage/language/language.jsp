@@ -15,8 +15,8 @@ List<Locale>toManage=
 		request.getAttribute(
 			Request.TO_MANAGE_LANGUAGES);
 %>
-<form action="./ManageLanguages" name="language" method="post">
-<input type="hidden" name="<%=Common.ACTION%>" value="save">
+<form action="./ManageLanguages" name="language" method="post" >
+<input type="hidden" name="<%=Common.CUSTOM_ACTION%>" value="<%=Common.SAVE%>">
 <%
 String lang;
 boolean isVisibile;

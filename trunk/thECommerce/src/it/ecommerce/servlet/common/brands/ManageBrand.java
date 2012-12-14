@@ -65,7 +65,8 @@ public class ManageBrand extends RootServlet {
 		final String metodo="process";
 		log.start(metodo);
 		initProcess(request);
-		if(Common.SAVE.equals(commonAction)){
+		
+		if(Common.SAVE.equals(request.getParameter(Common.CUSTOM_ACTION))){
 			ResourceBundle rb = (ResourceBundle)request
 												.getAttribute(Request.ResourceBundle);
 			HashMap<String, Object>brand=new HashMap<String, Object>();
