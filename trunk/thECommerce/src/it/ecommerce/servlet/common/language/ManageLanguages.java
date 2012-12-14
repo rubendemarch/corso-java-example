@@ -1,7 +1,6 @@
 package it.ecommerce.servlet.common.language;
 
 import it.ecommerce.servlet.RootServlet;
-import it.ecommerce.util.constants.Common;
 import it.ecommerce.util.constants.Request;
 import it.ecommerce.util.log.MyLogger;
 
