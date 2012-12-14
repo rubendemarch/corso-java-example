@@ -64,7 +64,6 @@ public class ManageLanguages extends RootServlet {
 		final String metodo="process";
 		log.start(metodo);
 		initProcess(request);
-		String action = request.getParameter(Common.ACTION);
 		if (!StringUtils.isEmpty(action)) {
 			updateLanguages(request, response);
 		}
