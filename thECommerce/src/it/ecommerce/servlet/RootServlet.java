@@ -40,6 +40,8 @@ public class RootServlet extends HttpServlet {
 	protected String realPath;
 	protected String contextPath;
 
+	protected String action;
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -159,6 +161,8 @@ public class RootServlet extends HttpServlet {
 
 	protected void initProcess(HttpServletRequest request){
 		loadLanguage(request);
+		action = request.getParameter(Common.ACTION);
+		request.setAttribute(Common.ACTION, action);
 	}
 
 	protected void dispatch(
