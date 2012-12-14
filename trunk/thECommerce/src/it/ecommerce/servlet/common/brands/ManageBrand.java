@@ -65,7 +65,7 @@ public class ManageBrand extends RootServlet {
 		final String metodo="process";
 		log.start(metodo);
 		initProcess(request);
-		if(Common.SAVE.equals(action)){
+		if(Common.SAVE.equals(commonAction)){
 			ResourceBundle rb = (ResourceBundle)request
 												.getAttribute(Request.ResourceBundle);
 			HashMap<String, Object>brand=new HashMap<String, Object>();
@@ -106,14 +106,14 @@ public class ManageBrand extends RootServlet {
 							rb.getString("salvataggio.ko"));
 			}
 		}
-		if(Common.LIST.equals(action)){
+		if(Common.LIST.equals(commonAction)){
 			SqlSession sql= sqlSessionFactory.openSession();
 			request.setAttribute(
 				"brandList",
 				sql.selectList("Brand.list"));
 			sql.close();
 		}
-		if(Common.DETAIL.equals(action)){
+		if(Common.DETAIL.equals(commonAction)){
 			SqlSession sql= sqlSessionFactory.openSession();
 			HashMap<String, Object>brand=new HashMap<String, Object>();
 			brand.put("colName","ID_BRAND");
