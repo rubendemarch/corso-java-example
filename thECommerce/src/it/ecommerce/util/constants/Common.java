@@ -14,4 +14,7 @@ public class Common {
 
 	public final static String SERVLET_NAME="servletName";
 	public final static String PAGE_TITLE="pageTitle";
+
+	public final static String CUSTOM_ACTION="CUSTOM_ACTION";
+	public final static String COMMON_ACTION="commonAction";
 }
