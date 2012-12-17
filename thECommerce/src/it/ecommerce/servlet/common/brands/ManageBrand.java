@@ -7,6 +7,7 @@ import it.ecommerce.util.constants.Common;
 import it.ecommerce.util.constants.Request;
 import it.ecommerce.util.log.MyLogger;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.TransactionIsolationLevel;
 
@@ -75,7 +77,7 @@ public class ManageBrand extends RootServlet {
 			brand.put("colValue", request.getParameter("name"));
 			if(commonAction.equals(Common.MODIFY)){
 				brand.put("idColName", "ID_BRAND");
-				brand.put("idColValue", request.getParameter("name"));
+				brand.put("idColValue", request.getParameter("idColumValue"));
 			}
 			SqlSession sql=sqlSessionFactory.openSession();
 			int count=0;
@@ -103,12 +105,30 @@ public class ManageBrand extends RootServlet {
 						logoUrl = urlSite +contextPath + imageUrl + fileNameGen;
 					}
 				}
+				boolean success=insertOrUpdateBrand(request,logoUrl);
 				request
 					.setAttribute(
 						"msg",
-						(insertNewBrand(request,logoUrl))?
-							rb.getString("salvataggio.ok"):
-							rb.getString("salvataggio.ko"));
+						rb.getString(
+							(success)?
+								"salvataggio.ok":
+								"salvataggio.ko"));
+				String oldLogoUrl=request.getParameter("oldLogoUrl");
+				if(success
+					&& Common.MODIFY.equals(commonAction)
+					&& !StringUtils.isEmpty(oldLogoUrl)
+					&& oldLogoUrl.contains(urlSite)
+					&& oldLogoUrl.contains("/")
+					&& logoUrl.contains("/")
+					&& !oldLogoUrl.substring(oldLogoUrl.lastIndexOf('/')).equals(
+							logoUrl.substring(logoUrl.lastIndexOf('/')))
+					){
+					try{
+						new File(realPath + imagePath + oldLogoUrl.substring(oldLogoUrl.lastIndexOf('/'))).delete();
+					}catch(Exception e){
+						log.error(metodo, "on delete file", e);
+					}
+				}
 			}
 		}
 		if(Common.LIST.equals(commonAction)){
@@ -134,7 +154,7 @@ public class ManageBrand extends RootServlet {
 		log.end(metodo);
 	}
 
-	private synchronized boolean insertNewBrand(
+	private synchronized boolean insertOrUpdateBrand(
 			HttpServletRequest request,
 			String logoUrl){
 		final String metodo="insertNewBrand";
@@ -145,13 +165,20 @@ public class ManageBrand extends RootServlet {
 		int rowsAffected=0;
 		try{
 			HashMap<String, Object>brand=new HashMap<String, Object>();
-			brand.put("ID_BRAND", KeyGenerator.keyGen(sql, "ID_BRAND", "brands", "B"));
-			brand.put("IS_VISIBLE", true);
+			brand.put(
+				"ID_BRAND",
+				Common.MODIFY.equals(commonAction)?
+					request.getParameter("idColumValue"):
+					KeyGenerator.keyGen(sql, "ID_BRAND", "brands", "B"));
+			brand.put("IS_VISIBLE", request.getParameter("isVisible"));
 			brand.put("URL", request.getParameter("url"));
 			brand.put("LOGO_URL", logoUrl);
 			brand.put("NAME", request.getParameter("name"));
-			brand.put("IS_DELETED", false);
-			rowsAffected=sql.insert("Brand.add", brand);
+			brand.put("IS_DELETED", request.getParameter("isDeleted"));
+			rowsAffected=
+				Common.ADD.equals(commonAction)?
+					sql.insert("Brand.add", brand):
+					sql.update("Brand.update", brand);
 			sql.commit();
 		}catch(Exception e){
 			log.error(metodo, request.getSession().getId(), e);

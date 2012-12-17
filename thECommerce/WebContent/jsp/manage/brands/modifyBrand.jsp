@@ -15,10 +15,15 @@ name="<%=Common.COMMON_ACTION%>"
 value="<%=Common.MODIFY%>">
 <input 
 type="hidden" 
+name="commonId" 
+value="<%=(String)brand.get("ID_BRAND")%>">
+<input 
+type="hidden" 
 name="<%=Common.CUSTOM_ACTION%>" 
 value="<%=Common.SAVE%>">
 <input type="hidden" name="ext" value="" id="ext">
 <input type="hidden" name="idColumValue" value="<%=(String)brand.get("ID_BRAND")%>">
+<input type="hidden" value="<%=(String)brand.get("LOGO_URL")%>" name="oldLogoUrl">
 <label><%=rb.getString("manage.brand.page.labelNome")%></label>
 <input type="text" value="<%=(String)brand.get("NAME")%>" name="name" maxlength="100" size="20">
 <br>
@@ -40,9 +45,26 @@ value="<%=Common.SAVE%>">
 	onchange="manageRadio('logoImg','logoUrl')"
 	value="image">
 <input type="file" name="logoImg" id="logoImg" accept="image/*" disabled="disabled">
+
+<br>
+<%=rb.getString("isVisible")%>
+&nbsp;
+<%=rb.getString("common.no")%>
+<input type="radio" name="isVisible" value="0"<%if(!isVisible){%> checked="checked"<%}%>>
+&nbsp;<%=rb.getString("common.yes")%>
+<input type="radio" name="isVisible" value="1"<%if(isVisible){%> checked="checked"<%}%>>
+
+<br>
+<%=rb.getString("isDeleted")%>
+&nbsp;
+<%=rb.getString("common.no")%>
+<input type="radio" name="isDeleted" value="0"<%if(!isDeleted){%> checked="checked"<%}%>>
+&nbsp;<%=rb.getString("common.yes")%>
+<input type="radio" name="isDeleted" value="1"<%if(isDeleted){%> checked="checked"<%}%>>
+
 <br>
 <input
 type="submit"
 value="<%=rb.getString("common.save")%><%=rb.getString("manage.brand.page.save")%>"
-onmouseup="copyValue('logoImg','ext')"> 
+onmouseup="copyValue('logoImg','ext')">
 </form>
