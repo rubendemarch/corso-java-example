@@ -73,6 +73,10 @@ public class ManageBrand extends RootServlet {
 			brand.put("colName","NAME");
 			brand.put("tableName","BRANDS");
 			brand.put("colValue", request.getParameter("name"));
+			if(commonAction.equals(Common.MODIFY)){
+				brand.put("idColName", "ID_BRAND");
+				brand.put("idColValue", request.getParameter("name"));
+			}
 			SqlSession sql=sqlSessionFactory.openSession();
 			int count=0;
 			try {
@@ -114,7 +118,8 @@ public class ManageBrand extends RootServlet {
 				sql.selectList("Brand.list"));
 			sql.close();
 		}
-		if(Common.DETAIL.equals(commonAction)){
+		if(Common.DETAIL.equals(commonAction)||
+			Common.MODIFY.equals(commonAction)){
 			SqlSession sql= sqlSessionFactory.openSession();
 			HashMap<String, Object>brand=new HashMap<String, Object>();
 			brand.put("colName","ID_BRAND");

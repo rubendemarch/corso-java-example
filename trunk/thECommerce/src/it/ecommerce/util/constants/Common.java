@@ -9,6 +9,7 @@ public class Common {
 	public final static String LIST="LIST";
 	public final static String SAVE="SAVE";
 	public final static String DETAIL="DETAIL";
+	public final static String MODIFY="MODIFY";
 
 	public final static String FORM_ID="FORM_ID";
 

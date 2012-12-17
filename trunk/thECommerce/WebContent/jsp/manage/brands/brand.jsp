@@ -14,8 +14,12 @@ if(Common.ADD.equals(action)){
 <jsp:include page="brandList.jsp"/>
 <%
 }else if(Common.DETAIL.equals(action)){
-	%>
+%>
 	<jsp:include page="detailBrand.jsp"/>
-	<%
-	}
-	%>
+<%
+}else if(Common.MODIFY.equals(action)){
+%>
+	<jsp:include page="modifyBrand.jsp"/>
+<%
+}
+%>

@@ -9,6 +9,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			parameterType="HashMap">
 		SELECT COUNT(${colName}) FROM ${tableName}
 		WHERE ${colName}=#{colValue}
+		<if test="idColName!=null">
+		AND ${idColName}!=#{idColValue}
+		</if>
 	</select>
 	<select
 			id="detail"
