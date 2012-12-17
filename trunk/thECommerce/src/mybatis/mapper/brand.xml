@@ -11,18 +11,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		(ID_BRAND,IS_VISIBLE,URL,LOGO_URL,NAME,IS_DELETED)
 		VALUES
 		(#{ID_BRAND},
-		#{IS_VISIBLE},
+		#{IS_VISIBLE,jdbcType=NUMERIC},
 		#{URL,jdbcType=VARCHAR},
 		#{LOGO_URL,jdbcType=VARCHAR},
 		#{NAME},
-		#{IS_DELETED})
+		#{IS_DELETED,jdbcType=NUMERIC})
 	</insert>
-	<update id="update">
+	<update id="update" parameterType="HashMap">
 		UPDATE brands 
-		SET IS_VISIBLE=#{IS_VISIBLE},
-		IS_DELETED=#{IS_DELETED},
-		URL=#{URL},
-		LOGO_URL=#{LOGO_URL},
+		SET IS_VISIBLE=#{IS_VISIBLE,jdbcType=NUMERIC},
+		IS_DELETED=#{IS_DELETED,jdbcType=NUMERIC},
+		URL=#{URL,jdbcType=VARCHAR},
+		LOGO_URL=#{LOGO_URL,jdbcType=VARCHAR},
 		NAME=#{NAME}
 		WHERE ID_BRAND=#{ID_BRAND}
 	</update>

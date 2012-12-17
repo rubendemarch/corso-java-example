@@ -10,6 +10,8 @@ type="hidden"
 name="<%=Common.CUSTOM_ACTION%>" 
 value="<%=Common.SAVE%>">
 <input type="hidden" name="ext" value="" id="ext">
+<input type="hidden" name="isVisible" value="1">
+<input type="hidden" name="isDeleted" value="0">
 <label><%=rb.getString("manage.brand.page.labelNome")%></label>
 <input type="text" value="" name="name" maxlength="100" size="20">
 <br>
