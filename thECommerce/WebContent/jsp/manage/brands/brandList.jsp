@@ -26,6 +26,11 @@ for(HashMap<String,Object> brand: brandList){
 			<%=rb.getString("manage.brand.page.detail")%>
 			</button>
 		</td>
+		<td>
+			<button onclick="loadAll('./ManageBrands','<%=Common.MODIFY%>','<%=(String)brand.get("ID_BRAND")%>')">
+			<%=rb.getString("manage.brand.page.modify")%>
+			</button>
+		</td>
 	</tr>
 <%
 }
