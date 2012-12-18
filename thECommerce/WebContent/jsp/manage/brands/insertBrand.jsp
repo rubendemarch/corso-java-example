@@ -1,6 +1,6 @@
 <%@page import="it.ecommerce.util.constants.Common"%>
 <%@include file="../../common/props.jsp"%>
-<form action="./ManageBrands" method="post" enctype="multipart/form-data" name="brand">
+<form action="./ManageBrands" method="post" enctype="multipart/form-data" name="brand", id="brand">
 <input 
 type="hidden" 
 name="<%=Common.COMMON_ACTION%>" 
@@ -35,7 +35,8 @@ value="<%=Common.SAVE%>">
 <input type="file" name="logoImg" id="logoImg" accept="image/*" disabled="disabled">
 <br>
 <input
-type="submit"
+type="button"
 value="<%=rb.getString("common.save")%><%=rb.getString("manage.brand.page.save")%>"
-onmouseup="copyValue('logoImg','ext')"> 
+onmouseup="copyValue('logoImg','ext')"
+onclick="validateBrand('<%=rb.getString("file.size.limit.exceeded")%>',<%=(String)request.getAttribute(Common.maxImageSize)%>,'brand')"> 
 </form>

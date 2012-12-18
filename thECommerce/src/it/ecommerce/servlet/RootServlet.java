@@ -39,6 +39,7 @@ public class RootServlet extends HttpServlet {
 	protected String urlSite;
 	protected String realPath;
 	protected String contextPath;
+	protected String maxImageSize;
 
 	protected String commonAction;
 
@@ -76,6 +77,7 @@ public class RootServlet extends HttpServlet {
 		log.start(metodo);
 		super.init(config);
 		urlSite=(String) getServletContext().getInitParameter("urlSite");
+		maxImageSize=(String) getServletContext().getInitParameter("maxImageSize");
 		log.trace(metodo, urlSite);
 		realPath=getServletContext().getRealPath("/");
 		log.trace(metodo, realPath);
@@ -163,6 +165,7 @@ public class RootServlet extends HttpServlet {
 		loadLanguage(request);
 		commonAction = request.getParameter(Common.COMMON_ACTION);
 		request.setAttribute(Common.ACTION, commonAction);
+		request.setAttribute(Common.maxImageSize, maxImageSize);
 	}
 
 	protected void dispatch(
