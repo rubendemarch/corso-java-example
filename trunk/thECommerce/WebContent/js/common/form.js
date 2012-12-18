@@ -10,15 +10,33 @@ function loadAll(commonFormActionValue,commonActionValue,commonIdValue){
 	document.getElementById('commonForm').action=commonFormActionValue;
 	document.getElementById('commonForm').submit();
 }
-function validate(evt){
+function validateText(evt){
+	var regex = /[0-9]|[a-z]|[A-Z]|\ /;
+	validate(evt,regex);
+}
+function validateNumber(evt){
+	var regex = /[0-9]/;
+	validate(evt,regex);
+}
+function validateUrl(evt){
+	var regex = /[0-9]|[a-z]|[A-Z]|\:|\/|\.|\?|\=|\&|\#|\_|\-/;
+	validate(evt,regex);
+}
+function validate(evt,regex){
 	var theEvent = evt || window.event;
 	var key = theEvent.keyCode || theEvent.which;
 	key = String.fromCharCode(key);
-	var regex = /[0-9]|[a-z]|[A-Z]|\ |\?/;
 	if (!regex.test(key)) {
 		theEvent.returnValue = false;
 		if (theEvent.preventDefault){
 			theEvent.preventDefault();
 		}
 	}
+}
+function cleanText(field){
+	var regex = /[^a-zA-Z0-9 ]/g;
+	field.value=clean(field.value,regex);
+}
+function clean(string,regex){
+	return string.replace(regex,'');
 }
