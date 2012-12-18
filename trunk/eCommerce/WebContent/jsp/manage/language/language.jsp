@@ -21,14 +21,8 @@ List<Locale>toManage=
 		request.getAttribute(
 			Request.TO_MANAGE_LANGUAGES);
 %>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title><%=rb.getString("manage.language.page.title")%></title>
-</head>
-<body>
-<form action="./ManageLanguages" name="language" method="post">
-<input type="hidden" name="<%=Common.ACTION%>" value="save">
+<form action="./ManageLanguages" name="language" method="post" >
+<input type="hidden" name="<%=Common.CUSTOM_ACTION%>" value="<%=Common.SAVE%>">
 <%
 String lang;
 boolean isVisibile;
@@ -37,13 +31,11 @@ for(HashMap<String,Object>managedLanguage:managedLanguages){
 	isVisibile=((BigDecimal)managedLanguage.get("IS_VISIBLE")).intValue()>0;
 %>
 <input type="checkbox" name="<%=lang%>"<%if(isVisibile){%> checked<%}%>>
-<%=new Locale(lang)
-					.getDisplayLanguage(inLocale)%>
+<%=new Locale(lang).getDisplayLanguage(inLocale)%>
 <br>
 <%
 }
 %>
-
 <select name="toManage">
 	<option value="0000">
 		<%=rb.getString("common.sel")%>
@@ -60,5 +52,3 @@ for(Locale locale:toManage){
 </select>
 <input type="submit" value="<%=rb.getString("common.save")%>">
 </form>
-</body>
-</html>

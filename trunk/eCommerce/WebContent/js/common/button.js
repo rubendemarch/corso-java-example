@@ -1,3 +1,3 @@
 function copyValue(idfrom,idTo){
-	document.getElementById(itTo).value= document.getElementById(idfrom);
+	document.getElementById(idTo).value=document.getElementById(idfrom).value;
 }
