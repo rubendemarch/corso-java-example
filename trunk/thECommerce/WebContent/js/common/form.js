@@ -34,11 +34,11 @@ function validate(evt,regex){
 	}
 }
 function cleanText(field){
-	var regex = /[^a-zA-Z0-9 ]/g;
+	var regex = /[^a-zA-Z0-9\ ]/g;
 	field.value=clean(field.value,regex);
 }
 function cleanUrl(field){
-	var regex = /[^a-zA-Z0-9 :.?=&#_-\/]/g;
+	var regex = /[^a-zA-Z0-9\ \:\.\?\=\&\#\_\-\/]/g;
 	field.value=clean(field.value,regex);
 }
 function cleanNumber(field){
