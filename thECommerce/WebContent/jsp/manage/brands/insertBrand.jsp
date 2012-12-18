@@ -13,10 +13,10 @@ value="<%=Common.SAVE%>">
 <input type="hidden" name="isVisible" value="1">
 <input type="hidden" name="isDeleted" value="0">
 <label><%=rb.getString("manage.brand.page.labelNome")%></label>
-<input type="text" value="" name="name" maxlength="100" size="20">
+<input type="text" value="" name="name" maxlength="100" size="20" onkeypress="validate(event)">
 <br>
 <label><%=rb.getString("manage.brand.page.labelUrl")%></label>
-<input type="text" value="" name="url" maxlength="150" size="30">
+<input type="url" value="" name="url" maxlength="150" size="30" onkeypress="validate(event)">
 <br>
 <input
 	type="radio"
@@ -25,7 +25,7 @@ value="<%=Common.SAVE%>">
 	onchange="manageRadio('logoUrl','logoImg')"
 	value="url">
 <label><%=rb.getString("manage.brand.page.labelLogoUrl")%></label>
-<input type="text" value="" name="logoUrl" maxlength="150" size="30" id="logoUrl">
+<input type="url" value="" name="logoUrl" maxlength="150" size="30" id="logoUrl" onkeypress="validate(event)">
 <br>
 <input
 	type="radio"

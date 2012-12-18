@@ -97,7 +97,7 @@ public class ManageBrand extends RootServlet {
 				String logoUrl=request.getParameter("logoUrl");
 				if("image".equals(request.getParameter("radioLogoUrl"))){
 					Part filePart = request.getPart("logoImg");
-					if(filePart!=null){
+					if(filePart!=null && filePart.getSize()>0){
 						String ext = request.getParameter("ext");
 						ext=ext.substring(ext.lastIndexOf('.'));
 						String fileNameGen=FileNameGenerator.fileNameGen(ext);

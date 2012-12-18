@@ -28,7 +28,7 @@ value="<%=Common.SAVE%>">
 <input type="text" value="<%=(String)brand.get("NAME")%>" name="name" maxlength="100" size="20">
 <br>
 <label><%=rb.getString("manage.brand.page.labelUrl")%></label>
-<input type="text" value="<%=brand.get("URL")!=null?(String)brand.get("URL"):""%>" name="url" maxlength="150" size="30">
+<input type="url" value="<%=brand.get("URL")!=null?(String)brand.get("URL"):""%>" name="url" maxlength="150" size="30">
 <br>
 <input
 	type="radio"
@@ -37,7 +37,7 @@ value="<%=Common.SAVE%>">
 	onchange="manageRadio('logoUrl','logoImg')"
 	value="url">
 <label><%=rb.getString("manage.brand.page.labelLogoUrl")%></label>
-<input type="text" value="<%=(String)brand.get("LOGO_URL")%>" name="logoUrl" maxlength="150" size="30" id="logoUrl">
+<input type="url" value="<%=(String)brand.get("LOGO_URL")%>" name="logoUrl" maxlength="150" size="30" id="logoUrl">
 <br>
 <input
 	type="radio"
