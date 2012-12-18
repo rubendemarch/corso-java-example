@@ -48,3 +48,11 @@ function cleanNumber(field){
 function clean(string,regex){
 	return string.replace(regex,'');
 }
+function checkFileSize(idFieldFile,maxFileSize){
+	var field = document.getElementById(idFieldFile);
+	if(!field && !field.files && !field.files[0]){
+		return false;
+	}else{
+		return maxFileSize>field.files[0].size;
+	}
+}
