@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.TransactionIsolationLevel;
 
 /**
@@ -30,7 +31,8 @@ import org.apache.ibatis.session.TransactionIsolationLevel;
 public class ManageBrands extends RootServlet {
 	private static final long serialVersionUID = 1L;
 	private MyLogger log;
-	private String imagePath="image\\brand\\";
+	private String imagePath="images\\brand\\";
+	private String imageUrl="/images/brand/";
 
 	/**
 	 * @see RootServlet#RootServlet()
@@ -66,20 +68,21 @@ public class ManageBrands extends RootServlet {
 
 	protected void process(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
-		final String metodo = "process";
+		final String metodo="process";
 		log.start(metodo);
-		loadLanguage(request);
-		String action = request.getParameter(Common.ACTION);
+		initProcess(request);
 		
-		
-		if("inserisci".equals(action)){
+		if(Common.SAVE.equals(request.getParameter(Common.CUSTOM_ACTION))){
 			ResourceBundle rb = (ResourceBundle)request
 												.getAttribute(Request.ResourceBundle);
 			HashMap<String, Object>brand=new HashMap<String, Object>();
 			brand.put("colName","NAME");
 			brand.put("tableName","BRANDS");
 			brand.put("colValue", request.getParameter("name"));
+			if(commonAction.equals(Common.MODIFY)){
+				brand.put("idColName", "ID_BRAND");
+				brand.put("idColValue", request.getParameter("name"));
+			}
 			SqlSession sql=sqlSessionFactory.openSession();
 			int count=0;
 			try {
@@ -93,80 +96,82 @@ public class ManageBrands extends RootServlet {
 				request
 					.setAttribute(
 						"msg",
-						rb.getString("salvataggio.alreadyInserted"));
+						rb.getString("salvataggio.alreadyInsered"));
 			}else{
-				//se il file esiste già
-				
-				String url = request.getParameter("url");
+				String logoUrl=request.getParameter("logoUrl");
 				if("image".equals(request.getParameter("radioLogoUrl"))){
-					//upload immagine
 					Part filePart = request.getPart("logoImg");
-					
-					if (filePart!=null){
-						
-						filePart.getContentType();
-						filePart.getName();
-						
-						//scrivo il file speficificando il percorso dv scrivere il file
-						
+					if(filePart!=null){
 						String ext = request.getParameter("ext");
-						//estraggo l'estensione a partire dal punto in poi
-						ext=ext.substring(ext.lastIndexOf('.')-1);
-						String fileNameGen = FileNameGenerator.fileGen("");
-						filePart.write(realPath+imagePath+fileNameGen);
-						
-						//creo la url nella paramiter e la salvo 
-						url = siteUrl+contextPath+imagePath+fileNameGen; 
+						ext=ext.substring(ext.lastIndexOf('.'));
+						String fileNameGen=FileNameGenerator.fileNameGen(ext);
+						filePart.write(realPath + imagePath + fileNameGen);
+						logoUrl = urlSite +contextPath + imageUrl + fileNameGen;
 					}
-					
 				}
 				request
 					.setAttribute(
 						"msg",
-						(insertNewBrand(request))?
+						(insertNewBrand(request,logoUrl))?
 							rb.getString("salvataggio.ok"):
 							rb.getString("salvataggio.ko"));
 			}
 		}
-		request
-		.getRequestDispatcher("jsp/manage/brands/insertBrand.jsp")
-			.forward(request, response);
+		if(Common.LIST.equals(commonAction)){
+			SqlSession sql= sqlSessionFactory.openSession();
+			request.setAttribute(
+				"brandList",
+				sql.selectList("Brand.list"));
+			sql.close();
+		}
+		if(Common.DETAIL.equals(commonAction)||
+			Common.MODIFY.equals(commonAction)){
+			SqlSession sql= sqlSessionFactory.openSession();
+			HashMap<String, Object>brand=new HashMap<String, Object>();
+			brand.put("colName","ID_BRAND");
+			brand.put("tableName","BRANDS");
+			brand.put("colValue", request.getParameter("commonId"));
+			request.setAttribute(
+				"brand",
+				sql.selectOne("Common.detail", brand));
+			sql.close();
+		}
+		dispatch(request, response);
 		log.end(metodo);
 	}
-
+	
+	
 	/*
 	 * metodo che verifica se sn riuscito a inserire un nuovo brand, si utilizza
 	 * x gestire la coda degli utenti che contemporaneamente vogliono inserire
 	 * nuovi brand
 	 */
-	private synchronized boolean insertNewBrand(HttpServletRequest request) {
-		String url;
-		final String metodo = "insertNewBrand";
+	private synchronized boolean insertNewBrand(
+			HttpServletRequest request,
+			String logoUrl){
+		final String metodo="insertNewBrand";
 		log.start(metodo);
-
 		SqlSession sql = sqlSessionFactory
-				.openSession(TransactionIsolationLevel.READ_COMMITTED);
-
-		int rowsAffected = 0;
-		HashMap<String, Object> brand = new HashMap<String, Object>();
-		try {
-			brand.put("ID_BRAND",
-					KeyGenerator.KeyGen(sql, "ID_BRAND", "BRANDS", "B"));
+									.openSession(
+										TransactionIsolationLevel.READ_COMMITTED);
+		int rowsAffected=0;
+		try{
+			HashMap<String, Object>brand=new HashMap<String, Object>();
+			brand.put("ID_BRAND", KeyGenerator.keyGen(sql, "ID_BRAND", "brands", "B"));
 			brand.put("IS_VISIBLE", true);
-			brand.put("URL", request.getParameter("url"));// TODO
-			brand.put("LOGO_URL", request.getParameter("logo_url"));// TODO
+			brand.put("URL", request.getParameter("url"));
+			brand.put("LOGO_URL", logoUrl);
 			brand.put("NAME", request.getParameter("name"));
 			brand.put("IS_DELETED", false);
-			rowsAffected = sql.insert("Brand.add", brand);
-			sql.commit();// se è andato bene
-		} catch (Exception e) {
+			rowsAffected=sql.insert("Brand.add", brand);
+			sql.commit();
+		}catch(Exception e){
 			log.error(metodo, request.getSession().getId(), e);
-			sql.rollback();// se è andato male
+			sql.rollback();
+		}finally{
+			sql.close();
+			log.end(metodo);
 		}
-
-		sql.close();// chiudo sessione
-		log.end(metodo);
 		return rowsAffected>0;
 	}
-
 }

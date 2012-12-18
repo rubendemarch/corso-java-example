@@ -2,13 +2,18 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>eCommerce</display-name>
   <welcome-file-list>
-    <welcome-file>jsp/common/home.jsp</welcome-file>
+    <welcome-file>Home</welcome-file>
   </welcome-file-list>
   <!-- START dichiarazioni servlet -->
+   <servlet>
+    <servlet-name>Root</servlet-name>
+    <servlet-class>it.eCommerce.servlet.RootServlet</servlet-class>
+  </servlet>
   <servlet>
     <servlet-name>ManageLanguages</servlet-name>
     <servlet-class>it.eCommerce.servlet.common.language.ManageLanguages</servlet-class>
   </servlet>
+  
   <servlet>
   	<!-- Il nome della servlet deve coincidere con il servlet mapping -->
     <servlet-name>ManageBrands</servlet-name>
@@ -27,9 +32,15 @@
   
   <!-- START dichiarazioni servlet-mapping -->
   <servlet-mapping>
+		<servlet-name>Root</servlet-name>
+		<url-pattern>/Home</url-pattern>
+	</servlet-mapping>
+  
+  <servlet-mapping>
     <servlet-name>ManageLanguages</servlet-name>
     <url-pattern>/ManageLanguages</url-pattern>
   </servlet-mapping>
+  
   <servlet-mapping>
     <servlet-name>ManageBrands</servlet-name>
     <url-pattern>/ManageBrands</url-pattern>

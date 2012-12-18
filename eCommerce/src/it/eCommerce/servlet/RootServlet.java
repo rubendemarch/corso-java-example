@@ -1,10 +1,10 @@
 package it.eCommerce.servlet;
 
 
-import it.eCommerce.log.MyLogger;
 import it.eCommerce.util.constants.Common;
 import it.eCommerce.util.constants.Request;
 import it.eCommerce.util.constants.Session;
+import it.eCommerce.util.log.MyLogger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,12 +20,11 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
-
 
 /**
  * Servlet implementation class RootServlet
@@ -36,10 +35,12 @@ public class RootServlet extends HttpServlet {
 	private MyLogger log;
 
 	protected SqlSessionFactory sqlSessionFactory=null;
-	
-	protected String siteUrl;
+
+	protected String urlSite;
 	protected String realPath;
 	protected String contextPath;
+
+	protected String commonAction;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -52,8 +53,6 @@ public class RootServlet extends HttpServlet {
 		
 		String resource = "mybatis/config/mybatis-config.xml";
 		InputStream inputStream=null;
-		
-		
 		try {
 			inputStream = Resources.getResourceAsStream(resource);
 		} catch (IOException e) {
@@ -66,28 +65,34 @@ public class RootServlet extends HttpServlet {
 		}
 		log.end(metodo);
 	}
+
 	
-	public void init(ServletConfig config) throws ServletException{
-		final String metodo = "init";
+	/* (non-Javadoc)
+	 * @see javax.servlet.GenericServlet#init(javax.servlet.ServletConfig)
+	 */
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		final String metodo="init";
 		log.start(metodo);
-		
 		super.init(config);
-		siteUrl = (String) getServletContext().getInitParameter("managedLanguages");
-		realPath = getServletContext().getRealPath("/");
-		contextPath = getServletContext().getContextPath();
+		urlSite=(String) getServletContext().getInitParameter("urlSite");
+		log.trace(metodo, urlSite);
+		realPath=getServletContext().getRealPath("/");
+		log.trace(metodo, realPath);
+		contextPath=getServletContext().getContextPath();
+		log.trace(metodo, contextPath);
 		log.end(metodo);
-		
-		return;
 	}
+
 
 	/**
 	 * @see Servlet#destroy()
 	 */
 	public void destroy() {
-		// TODO connessione <------ :-)
+		// TODO 
 	}
 
-	protected Locale getLocale(HttpServletRequest request){
+	private Locale getLocale(HttpServletRequest request){
 		final String metodo="getLocale";
 		log.start(metodo);
 		if(request.getSession().getAttribute(Session.LANG)==null){
@@ -116,28 +121,104 @@ public class RootServlet extends HttpServlet {
 		log.end(metodo);
 		return (Locale)request.getSession().getAttribute(Session.LANG);
 	}
-	protected void loadLanguage(HttpServletRequest request){
+
+	private void loadLanguage(HttpServletRequest request){
 		Locale locale = getLocale(request);
+		String servletName = this.getClass().getName();
+		request.setAttribute(
+				Common.SERVLET_NAME,
+				servletName);
+
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(Common.RESOURCE, locale);
+		request.setAttribute(
+				Common.PAGE_TITLE,
+				resourceBundle.getString(
+					servletName));
+
 		request.setAttribute(
 			Request.ResourceBundle,
-			ResourceBundle.getBundle(Common.RESOURCE, locale));
+			resourceBundle);
+
 		request.setAttribute(
 			Request.LOCALE,
 			locale);
-		
+
 		String language =
 			(String) getServletContext().getInitParameter("managedLanguages");
-		
+
 		List<Locale>managedLanguages=new ArrayList<Locale>();
 		StringTokenizer tok =
 			new StringTokenizer(language, " ");
 		while(tok.hasMoreTokens()){
 			managedLanguages.add(new Locale(tok.nextToken()));
 		}
-		
+
 		request.setAttribute(
 				Request.managedLanguages,
 				managedLanguages);
 		
+	}
+
+	protected void initProcess(HttpServletRequest request){
+		final String metodo="getLocale";
+		log.start(metodo);
+		loadLanguage(request);
+		commonAction = request.getParameter(Common.COMMON_ACTION);
+		request.setAttribute(Common.ACTION, commonAction);
+		
+		log.end(metodo);
+	}
+
+	protected void dispatch(
+			HttpServletRequest request,
+			HttpServletResponse response) throws	ServletException,
+																			IOException{
+		final String metodo="dispatch";
+		log.start(metodo);
+		
+		request.getRequestDispatcher("jsp/common/root.jsp").forward(request, response);
+		
+		
+		log.end(metodo);
+	}
+
+	/* (non-Javadoc)
+	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		final String metodo="doGet";
+		log.start(metodo);
+		
+		process(req, resp);
+		
+		log.end(metodo);
+	}
+
+	/* (non-Javadoc)
+	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		
+		final String metodo="doPost";
+		log.start(metodo);
+		
+		process(req, resp);
+		
+		log.end(metodo);
+	}
+
+	protected void process(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		final String metodo="process";
+		log.start(metodo);
+		
+		initProcess(request);
+		dispatch(request, response);
+		
+		log.end(metodo);
 	}
 }

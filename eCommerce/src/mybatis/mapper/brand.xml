@@ -8,19 +8,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<insert id="add" parameterType="HashMap">
 		INSERT INTO BRANDS(ID_BRAND,IS_VISIBLE,	URL,LOGO_URL,NAME,IS_DELETED)
-		VALUES(#{ID_BRAND},#{IS_VISIBLE}, #{URL}, #{LOGO_URL}, #{NAME}, #{IS_DELETED})
+		VALUES(
+		#{ID_BRAND},
+		#{IS_VISIBLE}, 
+		#{URL}, 
+		#{LOGO_URL}, 
+		#{NAME}, 
+		#{IS_DELETED})
 	</insert>
 	<update id="update">
-		UPDATE BRANDS SET IS_VISIBLE=#{IS_VISIBLE},
+		UPDATE BRANDS SET 
+		IS_VISIBLE=#{IS_VISIBLE},
 		IS_DELETED = #{IS_DELETED},
 		URL= #{URL},
 		LOGO_URL=#{LOGO_URL},
 		NAME=#{NAME}
 		WHERE ID_BRAND=#{ID_BRAND}
 	</update>
-	<select id="" resultType="HashMap">
-		SELECT COUNT FROM ()
-		
-	</select>
 	
 </mapper>
