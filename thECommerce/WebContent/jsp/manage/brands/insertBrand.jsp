@@ -16,7 +16,7 @@ value="<%=Common.SAVE%>">
 <input type="text" value="" name="name" maxlength="100" size="20" onkeypress="validateText(event)" onblur="cleanText(this)">
 <br>
 <label><%=rb.getString("manage.brand.page.labelUrl")%></label>
-<input type="url" value="" name="url" maxlength="150" size="30" onkeypress="validateUrl(event)">
+<input type="url" value="" name="url" maxlength="150" size="30" onkeypress="validateUrl(event)" onblur="cleanUrl(this)">
 <br>
 <input
 	type="radio"
@@ -25,7 +25,7 @@ value="<%=Common.SAVE%>">
 	onchange="manageRadio('logoUrl','logoImg')"
 	value="url">
 <label><%=rb.getString("manage.brand.page.labelLogoUrl")%></label>
-<input type="url" value="" name="logoUrl" maxlength="150" size="30" id="logoUrl" onkeypress="validateUrl(event)">
+<input type="url" value="" name="logoUrl" maxlength="150" size="30" id="logoUrl" onkeypress="validateUrl(event)" onblur="cleanUrl(this)">
 <br>
 <input
 	type="radio"
