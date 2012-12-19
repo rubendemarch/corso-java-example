@@ -171,6 +171,9 @@ public class ManageBrand extends RootServlet {
 				sql.selectOne("Common.detail", brand));
 			sql.close();
 		}
+		if(Common.ADD.equals(commonAction)){
+			request.setAttribute("brand",new HashMap<String, Object>());
+		}
 		dispatch(request, response);
 		log.end(metodo);
 	}

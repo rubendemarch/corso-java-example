@@ -27,7 +27,7 @@ String servletName=(String)request.getAttribute(Common.SERVLET_NAME);
 <%
 if(ManageBrand.class.getName().equals(servletName)){
 %>
-<jsp:include page="../manage/brands/brand.jsp"/>
+<jsp:include page="../manage/brands/root.jsp"/>
 <%
 }else if(ManageLanguages.class.getName().equals(servletName)){
 %>
