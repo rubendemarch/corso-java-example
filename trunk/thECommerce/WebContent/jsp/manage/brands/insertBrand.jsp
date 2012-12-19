@@ -35,8 +35,9 @@ value="<%=Common.SAVE%>">
 <input type="file" name="logoImg" id="logoImg" accept="image/*" disabled="disabled">
 <br>
 <input
+id="buttonSubmit"
 type="button"
 value="<%=rb.getString("common.save")%><%=rb.getString("manage.brand.page.save")%>"
 onmouseup="copyValue('logoImg','ext')"
-onclick="validateBrand('<%=rb.getString("file.size.limit.exceeded")%>',<%=(String)request.getAttribute(Common.maxImageSize)%>,'brand')"> 
+onclick="validateBrand('<%=rb.getString("file.size.limit.exceeded")%>',<%=(String)request.getAttribute(Common.maxImageSize)%>,'buttonSubmit')">
 </form>
