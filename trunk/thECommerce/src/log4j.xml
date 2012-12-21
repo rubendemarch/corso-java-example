@@ -11,6 +11,23 @@
 		</layout>
 	</appender>
 
+	<appender name="SmtpAppender" class="org.apache.log4j.net.SMTPAppender">
+		<param name="SMTPProtocol" value="smtps"/>
+		<param name="SMTPPort" value="465"/>
+		<param name="SMTPHost" value="smtp.gmail.com"/>
+		<param name="SMTPUsername" value="XXX@gmail.com"/>
+		<param name="SMTPPassword" value="..."/>
+		<param name="From" value="XXX@gmail.com"/>
+		<param name="To" value="xxx@yyy.eee"/>
+		<param name="Subject" value="Log of messages"/>
+		<param name="BufferSize" value="1"/>
+		<param name="EvaluatorClass" value="it.ecommerce.util.log.TriggerLogEvent"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+			value="[%d{ISO8601}][%-5p][%t][%c]%m%n" />
+		</layout>
+	</appender>
+
 	<appender name="MybatisFileAppender" class="org.apache.log4j.DailyRollingFileAppender">
 		<param name="File" value="C:/log/mybatisThECommerce.log" />
 		<param name="Append" value="true" />
@@ -44,5 +61,6 @@
 		<level value="TRACE" />
 <!-- 		scegliere il value tra TRACE,DEBUG,INFO,WARN,ERROR,FATAL -->
 		<appender-ref ref="RootFileAppender" />
+		<appender-ref ref="SmtpAppender" />
 	</root>
 </log4j:configuration>
