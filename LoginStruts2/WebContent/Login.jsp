@@ -3,6 +3,7 @@
 <html>
 <head>
 <title><s:text name="label.pageTitle"/></title>
+<s:head/>
 </head>
 
 <body>
