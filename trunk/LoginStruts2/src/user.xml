@@ -6,4 +6,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="login" resultType="int" parameterType="struts2.LoginAction">
 		SELECT COUNT(ID_USER) FROM users WHERE user_name=#{userName} AND password=#{md5Password}
 	</select>
+	<insert id="add" parameterType="struts2.RegisterAction">
+		INSERT INTO users 
+		(ID_USER,USER_NAME,PASSWORD,E_MAIL,NAME,SURNAME,PHONE,MOBILE_PHONE,BIRTH_DAY,REGISTER_DAY,ID_ROLE)
+		VALUES(#{userId},#{userName},#{md5Password},#{email},#{name},#{surName},#{phone,jdbcType=VARCHAR},#{mobilePhone,jdbcType=VARCHAR},#{birthDay,jdbcType=DATE},#{registerDay},#{idRole})
+	</insert>
 </mapper>
