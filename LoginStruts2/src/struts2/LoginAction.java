@@ -3,59 +3,25 @@
  */
 package struts2;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import com.opensymphony.xwork2.ActionSupport;
+import constant.Common;
 
 /**
  * @author Dr
  * 
  */
-public class LoginAction extends ActionSupport {
-	private static final long serialVersionUID = -6206808590907715484L;
-
-	private SqlSessionFactory sqlSessionFactory=null;
+public class LoginAction extends BaseAction {
+	private static final long serialVersionUID = -2414529954723245070L;
 
 	private String userName;
 	private String password;
-	private Date myBirthday;
-
-	private Pattern pattern;
 
 	public LoginAction() {
-		String resource = "mybatis-config.xml";
-		InputStream inputStream=null;
-		try {
-			inputStream = Resources.getResourceAsStream(resource);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		if(inputStream!=null){
-			try {
-				sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		pattern = Pattern.compile( "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20})");
-	}
-
-	public Date getMyBirthday() {
-		return myBirthday;
-	}
-
-	public void setMyBirthday(Date myBirthday) {
-		this.myBirthday = myBirthday;
+		super();
 	}
 
 	public String getUserName() {
@@ -104,7 +70,7 @@ public class LoginAction extends ActionSupport {
 			addFieldError("password",
 								getText("error.length",
 										new String[]{getText("password")}));
-		}else if(!pattern.matcher(password).matches()){
+		}else if(!Pattern.compile(Common.PATTERN_PASSWORD).matcher(password).matches()){
 			addFieldError("password",
 					getText("error.format",
 							new String[]{getText("password")}));
