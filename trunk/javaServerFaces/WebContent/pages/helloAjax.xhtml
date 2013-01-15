@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/WEB-INF/templates/basicTemplate.xhtml">
+	<ui:define name="title">
+	JSF 2.0 + Ajax Hello World Example
+	</ui:define>
+	<ui:define name="content">
+    	<h:form>
+    	   <h:inputText id="name" value="#{utente.userName}">
+    	   
+    	   	<f:ajax execute="name" render="output" onevent="onblur"/>
+    	   </h:inputText>
+    	   <h:commandButton value="Welcome Me">
+    		 <f:ajax execute="name" render="output" />
+    	   </h:commandButton>
+ 
+    	   <h2><h:outputText id="output" value="#{utente.sayWelcome}" /></h2>	
+    	</h:form>
+	</ui:define>
+	
+</ui:composition>
+</html>

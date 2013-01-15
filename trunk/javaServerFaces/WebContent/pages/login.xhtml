@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/WEB-INF/templates/basicTemplate.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{rb.title2}"></h:outputText>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<h:form>
+			<h:panelGrid columns="3">
+				<h:outputText value="#{rb.name}"></h:outputText>
+				<h:inputText value="#{utente.userName}" required="true" id="userName">
+					<f:validateLength minimum="2" maximum="5"></f:validateLength>
+				</h:inputText>
+				<h:message for="userName" style="color:red" />
+				
+				<h:outputText value="#{rb.password}"></h:outputText>
+				<h:inputSecret value="#{utente.password}" id="pippo">
+				<f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})"></f:validateRegex>
+				</h:inputSecret>
+				<h:message for="pippo" style="color:blue" />
+			</h:panelGrid>
+			<h:commandButton value="Login" action="login"></h:commandButton>
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>
+</html>
