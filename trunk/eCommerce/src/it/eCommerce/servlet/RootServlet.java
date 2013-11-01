@@ -66,7 +66,6 @@ public class RootServlet extends HttpServlet {
 		log.end(metodo);
 	}
 
-	
 	/* (non-Javadoc)
 	 * @see javax.servlet.GenericServlet#init(javax.servlet.ServletConfig)
 	 */
